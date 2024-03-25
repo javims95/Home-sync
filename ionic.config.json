@@ -1,0 +1,7 @@
+{
+  "name": "home-sync",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
