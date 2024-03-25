@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,5 +6,5 @@ import { NotificationsService } from '../services/notifications.service';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page {
-  constructor(private notificationService: NotificationsService) {}
+  constructor() {}
 }
