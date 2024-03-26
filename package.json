@@ -70,7 +70,7 @@
         "typescript": "~5.2.2"
     },
     "lint-staged": {
-        "src/**/*.{ts,html,json}": [
+        "*.{ts,html,json}": [
             "prettier --write",
             "git add"
         ]
