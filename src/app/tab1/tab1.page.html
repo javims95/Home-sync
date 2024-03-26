@@ -11,5 +11,13 @@
         </ion-toolbar>
     </ion-header>
 
-    <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-button (click)="scheduleNotification()"
+        >Enviar notificación</ion-button
+    >
+    <ion-button (click)="cancelNotification()"
+        >Cancelar notificación</ion-button
+    >
+    <ion-button (click)="removeAllDeliveredNotifications()"
+        >Cancelar notificación</ion-button
+    >
 </ion-content>
