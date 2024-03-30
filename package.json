@@ -11,7 +11,7 @@
         "sync": "ionic cap sync",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
-        "format": "prettier --write src/**/*.{ts,js,html,json}",
+        "format": "prettier --write src/**/*.{ts,js,html,json} api/**/*.{ts,js,html,json}",
         "test": "ng test",
         "lint": "ng lint"
     },
@@ -35,6 +35,7 @@
         "@capacitor/status-bar": "5.0.7",
         "@ionic/angular": "^7.0.0",
         "ionicons": "^7.0.0",
+        "onesignal-cordova-plugin": "^5.1.0",
         "rxjs": "~7.8.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.14.2"
