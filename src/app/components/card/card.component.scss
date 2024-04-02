@@ -1,0 +1,23 @@
+@import '../../styles/flexbox-layout.scss';
+
+.card {
+    // background-color: #333; /* Color oscuro similar al color "dark" de Ionic */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 16px; /* Espaciado interno */
+    margin-bottom: 16px; /* Espaciado inferior */
+
+    &.active {
+        background-color: #FCFCFC;
+    }
+
+    // .row {
+    //     display: flex;
+
+    // }
+    // .col-6 {
+    //     max-width: 50%;
+    // }
+}
+
+
+

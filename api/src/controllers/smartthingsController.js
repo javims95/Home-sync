@@ -14,6 +14,16 @@ const getDevices = async (req, res) => {
     }
 }
 
+const getStatus = async (req, res) => {
+    const { deviceId } = req.params
+    try {
+        const response = await getDeviceStatus(deviceId)
+        res.json(response.components.main.switch.switch.value)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 const toggleDevice = async (req, res) => {
     const { deviceId } = req.params
 
@@ -78,4 +88,5 @@ module.exports = {
     toggleDevice,
     turnOn,
     turnOff,
+    getStatus,
 }

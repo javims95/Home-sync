@@ -1,0 +1,19 @@
+<div class="card active">
+    <div class="card-header">
+        <div class="row justify-content-between">
+            <div>
+                <ion-icon size="large" name="tv-outline"></ion-icon>
+            </div>
+
+            <div>
+                <app-power-switch
+                    [index]="index"
+                    [checked]="device.status === 'on' ? true : false"
+                ></app-power-switch>
+            </div>
+        </div>
+    </div>
+    <div class="card-content">
+        <h3 class="custom-card-title">{{ device.label }}</h3>
+    </div>
+</div>

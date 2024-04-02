@@ -1,0 +1,112 @@
+$size: 6vw;
+
+.switch-on-off {
+    display: inline-block;
+    background-color: gray;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+label {
+    width: $size;
+    height: $size;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+label svg {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: $size;
+    transform: translate(5%, 0);
+    transform: rotateZ(-56deg);
+    border-radius: 50%; 
+}
+
+.check {
+    display: none;
+}
+
+.inner-circle,
+.outer-circle {
+    width: 80%;
+    transform: translate(15%, 15%);
+    fill: none;
+    stroke-width: 8%;
+    stroke: white;
+    stroke-dasharray: 220%;
+    stroke-dashoffset: 220%;
+    transition: 0.45s;
+    stroke-linecap: round;
+}
+
+.inner-circle {
+    stroke-dashoffset: 40%;
+    stroke: red; // Cambiado a rojo
+}
+
+.outer-circle {
+    stroke-dashoffset: 220%;
+    stroke: green; // Cambiado a verde
+    filter: none;
+}
+
+.rect {
+    position: absolute;
+    height: 33%;
+    width: 10%;
+    transform: translate(15%, -110%);
+    background-color: red; // Cambiado a negro
+    z-index: 3;
+    border-radius: 20px;
+}
+
+[id^="check"]:checked ~* .inner-circle,
+[id^="check"]:checked ~* .outer-circle {
+    stroke-dashoffset: 40%;
+}
+
+[id^="check"]:checked ~* .outer-circle {
+    transition: filter 0.1s ease-in 0.5s, stroke-dashoffset 0.4s ease-in-out;
+    filter: drop-shadow(0px 0px 4px rgba(79, 245, 121, 0.8)) drop-shadow(0px 0px 3px rgba(21, 237, 14, 0.8));
+}
+
+[id^="check"]:checked ~* .rotate-svg {
+    transition: transform 0.4s ease-in-out;
+    transform: rotateZ(304deg);
+}
+
+[id^="check"]:checked ~* .rect {
+    animation: up-to-down 0.6s cubic-bezier(.46, .89, .81, 1.44) forwards;
+}
+
+@keyframes up-to-down {
+    0% {
+        transform: translate(15%, -100%);
+    }
+
+    75% {
+        transform: translate(2.5%, -180%);
+        background-color: red; // Cambiado a rojo
+    }
+
+    87% {
+        transform: translate(2.5%, -90%);
+        box-shadow: none;
+        background-color: green; // Cambiado a verde
+    }
+
+    100% {
+        background-color: green; // Cambiado a verde
+        box-shadow: inset 0 0 0.5rem 0 rgb(26, 239, 51), 0 0 0.5rem 0 rgb(6, 235, 6);
+        transform: translate(15%, -110%);
+    }
+}
+
+.rect {
+    box-shadow: none;
+}
