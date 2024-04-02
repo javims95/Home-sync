@@ -1,23 +1,26 @@
 @import '../../styles/flexbox-layout.scss';
 
 .card {
-    // background-color: #333; /* Color oscuro similar al color "dark" de Ionic */
-    border-radius: 8px; /* Bordes redondeados */
-    padding: 16px; /* Espaciado interno */
-    margin-bottom: 16px; /* Espaciado inferior */
+    // background-color: #333;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #fcfcfc;
 
-    &.active {
-        background-color: #FCFCFC;
+    &.disabled {
+        .card-content {
+            opacity: 0.7;
+            margin-top: 3px;
+        }
     }
 
-    // .row {
-    //     display: flex;
+    .card-content {
+        span {
+            display: block;
 
-    // }
-    // .col-6 {
-    //     max-width: 50%;
-    // }
+            &.currentTVContent {
+                font-size: 13px;
+            }
+        }
+    }
 }
-
-
-

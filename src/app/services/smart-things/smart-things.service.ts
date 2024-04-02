@@ -8,11 +8,17 @@ export class SmartThingsService {
     constructor() {}
 
     async getDevices() {
-        const response = await fetch(
-            `${environment.SMART_THINGS_BASE_URL}/devices`
-        )
+        const response = await fetch(`${environment.SMART_THINGS_BASE_URL}/devices`)
         if (!response.ok) {
             throw new Error('No se pudo obtener los dispositivos')
+        }
+        return await response.json()
+    }
+
+    async getDescription(deviceId: string) {
+        const response = await fetch(`${environment.SMART_THINGS_BASE_URL}/devices/${deviceId}`)
+        if (!response.ok) {
+            throw new Error('No se pudo obtener la descripción del dispositivo')
         }
         return await response.json()
     }

@@ -18,6 +18,8 @@ export interface Device {
     allowed: any[]
     executionContext: string
     status?: string
+    currentTVContent?: string
+    deviceTypeName?: string
 }
 
 interface Component {

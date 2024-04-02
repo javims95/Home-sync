@@ -63,9 +63,7 @@ export class NotificationsService {
         }
 
         try {
-            await new Promise((resolve) =>
-                setTimeout(resolve, timerInSeconds * 1000)
-            )
+            await new Promise((resolve) => setTimeout(resolve, timerInSeconds * 1000))
             await LocalNotifications.schedule(options)
         } catch (error) {
             alert('Error ' + JSON.stringify(error))

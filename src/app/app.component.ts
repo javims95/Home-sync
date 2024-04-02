@@ -17,11 +17,9 @@ export class AppComponent {
                 console.log('Notification Clicked : ' + clickData)
             })
 
-            OneSignal.Notifications.requestPermission(true).then(
-                (success: Boolean) => {
-                    console.log('Notification permission granted ' + success)
-                }
-            )
+            OneSignal.Notifications.requestPermission(true).then((success: Boolean) => {
+                console.log('Notification permission granted ' + success)
+            })
         }
     }
 }

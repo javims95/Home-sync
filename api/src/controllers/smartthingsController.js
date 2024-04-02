@@ -1,5 +1,6 @@
 const {
     getSmartThingsDevices,
+    getDeviceDescription,
     getDeviceStatus,
     turnOnDevice,
     turnOffDevice,
@@ -9,6 +10,16 @@ const getDevices = async (req, res) => {
     try {
         const devices = await getSmartThingsDevices()
         res.json(devices)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+const getDescription = async (req, res) => {
+    const { deviceId } = req.params
+    try {
+        const response = await getDeviceStatus(deviceId)
+        res.json(response)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -85,6 +96,7 @@ const turnOff = async (req, res) => {
 
 module.exports = {
     getDevices,
+    getDescription,
     toggleDevice,
     turnOn,
     turnOff,
