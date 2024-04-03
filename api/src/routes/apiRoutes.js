@@ -1,5 +1,5 @@
 const express = require('express')
-const smartthingsRoutes = require('./smartthingsRoutes')
+const smartthingsRoutes = require('./smartThingsRoutes')
 const goveeRoutes = require('./goveeRoutes')
 
 const router = express.Router()

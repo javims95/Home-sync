@@ -1,12 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const { getDevices, getStatus } = require('../../controllers/goveeController')
 
-router.get('/devices', (req, res) => {
-    // Implementación de la lógica para Govee
-})
-
-router.post('/command', (req, res) => {
-    // Implementación de la lógica para enviar comandos a Govee
-})
+router.get('/devices', getDevices)
+router.post('/devices/status', getStatus)
 
 module.exports = router

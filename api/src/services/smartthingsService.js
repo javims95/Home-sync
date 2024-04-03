@@ -6,7 +6,7 @@ const getSmartThingsDevices = async () => {
     try {
         const response = await axios.get(`${SMARTTHINGS_API_BASE_URL}/devices`, {
             headers: {
-                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+                Authorization: `Bearer ${process.env.SMART_THINGS_API_KEY}`,
             },
         })
 
@@ -20,7 +20,7 @@ const getDeviceDescription = async (deviceId) => {
     try {
         const response = await axios.get(`${SMARTTHINGS_API_BASE_URL}/devices/${deviceId}`, {
             headers: {
-                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+                Authorization: `Bearer ${process.env.SMART_THINGS_API_KEY}`,
                 'Content-Type': 'application/json',
             },
         })
@@ -35,7 +35,7 @@ const getDeviceStatus = async (deviceId) => {
     try {
         const response = await axios.get(`${SMARTTHINGS_API_BASE_URL}/devices/${deviceId}/status`, {
             headers: {
-                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+                Authorization: `Bearer ${process.env.SMART_THINGS_API_KEY}`,
                 'Content-Type': 'application/json',
             },
         })
@@ -62,7 +62,7 @@ const turnOnDevice = async (deviceId) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+                    Authorization: `Bearer ${process.env.SMART_THINGS_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
             }
@@ -90,7 +90,7 @@ const turnOffDevice = async (deviceId) => {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+                    Authorization: `Bearer ${process.env.SMART_THINGS_API_KEY}`,
                     'Content-Type': 'application/json',
                 },
             }

@@ -23,6 +23,10 @@ export class DevicesPage implements OnInit {
     }
 
     ngOnInit() {
+        this.getDevices()
+    }
+
+    getDevices = async () => {
         this.smartthingsService
             .getDevices()
             .then((res: DevicesResponse) => {
@@ -37,10 +41,10 @@ export class DevicesPage implements OnInit {
                 Promise.all(statusPromises)
                     .then((statuses) => {
                         statuses.forEach((status, index) => {
-                            this.devices[index].status = status // Asumiendo que el estado se almacena en un campo 'status' dentro de cada objeto de dispositivo
+                            this.devices[index].status = status
                         })
 
-                        // Comprobar y obtener la descripción si el label es 'tele'
+                        // Comprobar y obtener la descripción si es el televisor
                         this.devices.forEach((device, index) => {
                             if (
                                 device.deviceTypeName?.includes(DEVICES.SAMSUNG) ||
@@ -80,13 +84,6 @@ export class DevicesPage implements OnInit {
     }
 
     handleRefresh(event: any) {
-        // Llama a tu función de actualización aquí
-        console.log('Actualizando...')
-
-        // Simula una operación de actualización asincrónica
-        setTimeout(() => {
-            // Any calls to load data go here
-            event.target.complete()
-        }, 2000)
+        this.getDevices().then(event.target.complete())
     }
 }
