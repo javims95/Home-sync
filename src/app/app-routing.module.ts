@@ -12,6 +12,11 @@ const routes: Routes = [
             import('./pages/devices/devices.module').then((m) => m.DevicesPageModule),
     },
     {
+        path: 'tabs/devices/details/:deviceId',
+        loadChildren: () =>
+            import('./pages/devices/details/details.module').then((m) => m.DetailsPageModule),
+    },
+    {
         path: 'tab2',
         loadChildren: () =>
             import('./pages/tab2/tab2-routing.module').then((m) => m.Tab2PageRoutingModule),

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { Device, DevicesResponse } from 'src/app/models/devices.model'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
 import { DEVICES } from './conf/constants'
+import { GoveeService } from 'src/app/services/govee/govee.service'
+import { Router } from '@angular/router'
 
 @Component({
     selector: 'app-devices',
@@ -11,7 +13,11 @@ import { DEVICES } from './conf/constants'
 export class DevicesPage implements OnInit {
     devices: Device[]
 
-    constructor(private smartthingsService: SmartThingsService) {
+    constructor(
+        private smartthingsService: SmartThingsService,
+        private goveeService: GoveeService,
+        private router: Router
+    ) {
         // this.notificationsService.scheduleNotification(
         //     'Titulo',
         //     'Cuerpo',
@@ -23,10 +29,19 @@ export class DevicesPage implements OnInit {
     }
 
     ngOnInit() {
-        this.getDevices()
+        this.goveeService.getAllDevices().then((response) => {
+            const data = response.data[0]
+            console.log(data)
+            const { sku, device, deviceName } = data
+
+            this.goveeService.getDeviceStatus(sku, device).subscribe((status) => {
+                console.log(status)
+            })
+        })
+        this.getSmartThingsDevices()
     }
 
-    getDevices = async () => {
+    getSmartThingsDevices = async () => {
         this.smartthingsService
             .getDevices()
             .then((res: DevicesResponse) => {
@@ -84,6 +99,17 @@ export class DevicesPage implements OnInit {
     }
 
     handleRefresh(event: any) {
-        this.getDevices().then(event.target.complete())
+        this.getSmartThingsDevices().then(event.target.complete())
+    }
+
+    openDetailsPage = (event: Event, device: Device) => {
+        // Detener la propagación del evento si se hizo clic en el power-switch
+        if (event.target && (event.target as HTMLElement).closest('app-power-switch')) {
+            return
+        }
+
+        this.router.navigate(['tabs/devices/details', device.deviceId], {
+            state: { device: device },
+        })
     }
 }

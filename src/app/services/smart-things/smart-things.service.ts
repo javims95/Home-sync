@@ -8,7 +8,7 @@ export class SmartThingsService {
     constructor() {}
 
     async getDevices() {
-        const response = await fetch(`${environment.SMART_THINGS_BASE_URL}/devices`)
+        const response = await fetch(`${environment.SMART_THINGS_API_BASE_URL}/devices`)
         if (!response.ok) {
             throw new Error('No se pudo obtener los dispositivos')
         }
@@ -16,7 +16,7 @@ export class SmartThingsService {
     }
 
     async getDescription(deviceId: string) {
-        const response = await fetch(`${environment.SMART_THINGS_BASE_URL}/devices/${deviceId}`)
+        const response = await fetch(`${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}`)
         if (!response.ok) {
             throw new Error('No se pudo obtener la descripción del dispositivo')
         }
@@ -25,7 +25,7 @@ export class SmartThingsService {
 
     async getStatus(deviceId: string) {
         const response = await fetch(
-            `${environment.SMART_THINGS_BASE_URL}/devices/${deviceId}/status`
+            `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/status`
         )
         if (!response.ok) {
             throw new Error('No se pudo obtener el estado del dispositivo')
@@ -35,7 +35,7 @@ export class SmartThingsService {
 
     async toggleDevice(deviceId: string) {
         const response = await fetch(
-            `${environment.SMART_THINGS_BASE_URL}/devices/${deviceId}/toggle`
+            `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/toggle`
         )
         if (!response.ok) {
             throw new Error('No se pudo cambiar el estado del dispositivo')
@@ -45,7 +45,7 @@ export class SmartThingsService {
 
     async turnOnDevice(deviceId: string) {
         const response = await fetch(
-            `${environment.SMART_THINGS_BASE_URL}/devices/${deviceId}/turn-on`,
+            `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/turn-on`,
             { method: 'POST' }
         )
         if (!response.ok) {
@@ -56,7 +56,7 @@ export class SmartThingsService {
 
     async turnOffDevice(deviceId: string) {
         const response = await fetch(
-            `${environment.SMART_THINGS_BASE_URL}/devices/${deviceId}/turn-off`,
+            `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/turn-off`,
             { method: 'POST' }
         )
         if (!response.ok) {
