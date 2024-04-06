@@ -108,7 +108,7 @@ export class DevicesPage implements OnInit {
             return
         }
 
-        this.router.navigate(['tabs/devices/details', device.deviceId], {
+        this.router.navigate([`tabs/devices/details/${device.deviceId}/controls`], {
             state: { device: device },
         })
     }

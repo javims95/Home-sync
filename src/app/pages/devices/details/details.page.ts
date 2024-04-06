@@ -15,7 +15,6 @@ export class DetailsPage implements OnInit {
         const navigation = window.history.state
         if (navigation.device) {
             this.device = navigation.device
-            console.log(this.device)
         }
     }
 }

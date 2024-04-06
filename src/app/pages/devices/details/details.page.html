@@ -1,13 +1,15 @@
-<div class="header">
-    <div class="toolbar">
-        <div class="title">{{ device.label }}</div>
-    </div>
-</div>
+<div class="details-container">
+    <ion-tabs>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button tab="controls" href="/tabs/controls">
+                <ion-icon aria-hidden="true" name="triangle"></ion-icon>
+                <ion-label>Detalles</ion-label>
+            </ion-tab-button>
 
-<div class="ion-padding bg-light-grey">
-    <div class="content">
-        <p>ID: {{device.deviceId }}</p>
-        <p>Estado: {{ device.status }}</p>
-        <p>Contenido actual de la TV: {{ device.currentTVContent }}</p>
-    </div>
+            <ion-tab-button tab="tab2" href="/tabs/tab2">
+                <ion-icon aria-hidden="true" name="ellipse"></ion-icon>
+                <ion-label>Tab 2</ion-label>
+            </ion-tab-button>
+        </ion-tab-bar>
+    </ion-tabs>
 </div>
