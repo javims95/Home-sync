@@ -3,7 +3,6 @@
         <div class="toolbar row align-items-center">
             <app-icon
                 name="arrow-left-solid.svg"
-                size="25px"
                 color="#fff"
                 (iconClick)="handleGoBackButton()"
                 class="col-2"
@@ -12,7 +11,82 @@
         </div>
     </div>
 
-    <div class="content">
-        <div class="round-container"></div>
+    <div class="content bg-light-grey">
+        <div class="round-container" (click)="toggleChanged()">
+            <ion-toggle id="open-modal" #toggleRef (ionChange)="toggleChanged()"
+                >Temporizador</ion-toggle
+            >
+            <p class="text-muted">Ejemplo: Activar o desactivar después de 1 hora</p>
+            <!-- Modal -->
+            <ion-modal>
+                <ng-template>
+                    <ion-toolbar>
+                        <div class="row header-info align-items-start">
+                            <app-icon
+                                name="angle-left-solid.svg"
+                                color="#000"
+                                (iconClick)="cancel()"
+                                class="col-2"
+                            ></app-icon>
+                            <ion-title class="col-6">Temporizador</ion-title>
+                        </div>
+                    </ion-toolbar>
+                    <div class="modal-content">
+                        <!-- Modal content -->
+                        <div class="my">
+                            <ion-radio-group [(ngModel)]="actionValue" value="turnOn">
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="turnOn" justify="start"
+                                        >Encender</ion-radio
+                                    >
+                                </ion-item>
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="turnOff" justify="start"
+                                        >Apagar</ion-radio
+                                    >
+                                </ion-item>
+                            </ion-radio-group>
+                        </div>
+                        <div class="my">
+                            <ion-radio-group [(ngModel)]="timeValue" value="10">
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="10" justify="start"
+                                        >Después de 10 minutos</ion-radio
+                                    >
+                                </ion-item>
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="15" justify="start"
+                                        >Después de 15 minutos</ion-radio
+                                    >
+                                </ion-item>
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="30" justify="start"
+                                        >Después de 30 minutos</ion-radio
+                                    >
+                                </ion-item>
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="60" justify="start"
+                                        >Después de 60 minutos</ion-radio
+                                    >
+                                </ion-item>
+                                <ion-item>
+                                    <ion-radio labelPlacement="end" value="custom" justify="start"
+                                        >Personalizado</ion-radio
+                                    >
+                                </ion-item>
+                            </ion-radio-group>
+                        </div>
+                    </div>
+                    <ion-toolbar>
+                        <ion-buttons slot="start">
+                            <ion-button (click)="cancel()">Cancelar</ion-button>
+                        </ion-buttons>
+                        <ion-buttons slot="end">
+                            <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ng-template>
+            </ion-modal>
+        </div>
     </div>
 </div>

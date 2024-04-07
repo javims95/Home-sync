@@ -4,6 +4,8 @@ const {
     getDeviceStatus,
     turnOnDevice,
     turnOffDevice,
+    scheduleDeviceOn,
+    scheduleDeviceOff,
 } = require('../services/smartthingsService')
 
 const getDevices = async (req, res) => {
@@ -94,6 +96,31 @@ const turnOff = async (req, res) => {
     }
 }
 
+const scheduleOn = async (req, res) => {
+    const { deviceId, delaySeconds } = req.params
+    console.log()
+    try {
+        const taskId = await scheduleDeviceOn(deviceId, delaySeconds)
+        res.json({
+            message: `Tarea programada para encender el dispositivo ${deviceId} en ${delaySeconds} segundos.`,
+            taskId: taskId,
+        })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+const scheduleOff = async (req, res) => {
+    const { deviceId, delaySeconds } = req.params
+
+    try {
+        const response = await scheduleDeviceOff(deviceId, parseInt(delaySeconds, 10))
+        res.json(response)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
 module.exports = {
     getDevices,
     getDescription,
@@ -101,4 +128,6 @@ module.exports = {
     turnOn,
     turnOff,
     getStatus,
+    scheduleOn,
+    scheduleOff,
 }

@@ -9,7 +9,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 })
 export class IconComponent implements OnInit {
     @Input() name: string = ''
-    @Input() size: string = ''
+    @Input() size: string = '25px'
     @Input() color: string = ''
     @Output() iconClick = new EventEmitter<void>()
     iconPath: string = '/assets/svg/'

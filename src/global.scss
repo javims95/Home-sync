@@ -39,7 +39,15 @@
     font-style: normal;
 }
 
+// :root {
+//     --ion-background-color: #f6f6f6;
+// }
+
 body {
     font-family: 'Montserrat-Regular';
     // overflow: auto;
+}
+
+ion-router-outlet {
+    background-color: #f6f6f6;
 }
