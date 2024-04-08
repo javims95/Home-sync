@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment'
 export class SmartThingsService {
     constructor() {}
 
-    async getDevices() {
+    getDevices = async () => {
         const response = await fetch(`${environment.SMART_THINGS_API_BASE_URL}/devices`)
         if (!response.ok) {
             throw new Error('No se pudo obtener los dispositivos')
@@ -15,7 +15,7 @@ export class SmartThingsService {
         return await response.json()
     }
 
-    async getDescription(deviceId: string) {
+    getDescription = async (deviceId: string) => {
         const response = await fetch(`${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}`)
         if (!response.ok) {
             throw new Error('No se pudo obtener la descripción del dispositivo')
@@ -23,7 +23,7 @@ export class SmartThingsService {
         return await response.json()
     }
 
-    async getStatus(deviceId: string) {
+    getStatus = async (deviceId: string) => {
         const response = await fetch(
             `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/status`
         )
@@ -33,7 +33,7 @@ export class SmartThingsService {
         return await response.json()
     }
 
-    async toggleDevice(deviceId: string) {
+    toggleDevice = async (deviceId: string) => {
         const response = await fetch(
             `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/toggle`
         )
@@ -43,7 +43,7 @@ export class SmartThingsService {
         return await response.json()
     }
 
-    async turnOnDevice(deviceId: string) {
+    turnOnDevice = async (deviceId: string) => {
         const response = await fetch(
             `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/turn-on`,
             { method: 'POST' }
@@ -54,13 +54,30 @@ export class SmartThingsService {
         return await response.json()
     }
 
-    async turnOffDevice(deviceId: string) {
+    turnOffDevice = async (deviceId: string) => {
         const response = await fetch(
             `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/turn-off`,
             { method: 'POST' }
         )
         if (!response.ok) {
             throw new Error('No se pudo apagar el dispositivo')
+        }
+        return await response.json()
+    }
+
+    scheduleSimpleDevice = async (deviceId: string, configSchedule: object) => {
+        const response = await fetch(
+            `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/schedule-on`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(configSchedule),
+            }
+        )
+        if (!response.ok) {
+            throw new Error('No se pudo encender el dispositivo')
         }
         return await response.json()
     }

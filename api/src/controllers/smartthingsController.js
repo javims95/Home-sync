@@ -98,7 +98,6 @@ const turnOff = async (req, res) => {
 
 const scheduleOn = async (req, res) => {
     const { deviceId, delaySeconds } = req.params
-    console.log()
     try {
         const taskId = await scheduleDeviceOn(deviceId, delaySeconds)
         res.json({
