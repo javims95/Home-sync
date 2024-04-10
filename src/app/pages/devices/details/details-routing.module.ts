@@ -19,7 +19,7 @@ const routes: Routes = [
             },
             {
                 path: '',
-                redirectTo: 'info',
+                redirectTo: 'controls',
                 pathMatch: 'full',
             },
         ],

@@ -1,11 +1,14 @@
 import { Component } from '@angular/core'
 import { Capacitor } from '@capacitor/core'
 import OneSignal from 'onesignal-cordova-plugin'
+import { RouterOutlet } from '@angular/router'
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet],
 })
 export class AppComponent {
     constructor() {

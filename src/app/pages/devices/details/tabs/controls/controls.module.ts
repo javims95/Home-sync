@@ -10,7 +10,13 @@ import { ControlsPage } from './controls.page'
 import { IconComponent } from 'src/app/components/icon/icon.component'
 
 @NgModule({
-    imports: [CommonModule, FormsModule, IonicModule, ControlsPageRoutingModule],
-    declarations: [ControlsPage, IconComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ControlsPageRoutingModule,
+        ControlsPage,
+        IconComponent,
+    ],
 })
 export class ControlsPageModule {}

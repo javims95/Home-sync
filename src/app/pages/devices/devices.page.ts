@@ -4,11 +4,16 @@ import { SmartThingsService } from 'src/app/services/smart-things/smart-things.s
 import { DEVICES } from './conf/constants'
 import { GoveeService } from 'src/app/services/govee/govee.service'
 import { Router } from '@angular/router'
+import { CardComponent } from '../../components/card/card.component'
+import { NgFor } from '@angular/common'
+import { IonicModule } from '@ionic/angular'
 
 @Component({
     selector: 'app-devices',
     templateUrl: './devices.page.html',
     styleUrls: ['./devices.page.scss'],
+    standalone: true,
+    imports: [IonicModule, NgFor, CardComponent],
 })
 export class DevicesPage implements OnInit {
     devices: Device[]

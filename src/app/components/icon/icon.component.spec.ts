@@ -9,8 +9,7 @@ describe('IconComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [IconComponent],
-            imports: [IonicModule.forRoot()],
+            imports: [IonicModule.forRoot(), IconComponent],
         }).compileComponents()
 
         fixture = TestBed.createComponent(IconComponent)

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core'
+import { ConfigSchedule } from 'src/app/models/schedule-simple'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
@@ -65,9 +66,9 @@ export class SmartThingsService {
         return await response.json()
     }
 
-    scheduleSimpleDevice = async (deviceId: string, configSchedule: object) => {
+    scheduleSimpleDevice = async (configSchedule: ConfigSchedule) => {
         const response = await fetch(
-            `${environment.SMART_THINGS_API_BASE_URL}/devices/${deviceId}/schedule-on`,
+            `${environment.SMART_THINGS_API_BASE_URL}/devices/${configSchedule.deviceId}/simple-schedule`,
             {
                 method: 'POST',
                 headers: {
@@ -77,8 +78,23 @@ export class SmartThingsService {
             }
         )
         if (!response.ok) {
-            throw new Error('No se pudo encender el dispositivo')
+            throw new Error('No se pudo programar el dispositivo')
         }
+        return await response.json()
+    }
+
+    cancelScheduledTask = async (taskId: string) => {
+        const response = await fetch(`${environment.SMART_THINGS_API_BASE_URL}/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+        if (!response.ok) {
+            throw new Error('No se pudo cancelar la tarea programada')
+        }
+
         return await response.json()
     }
 }

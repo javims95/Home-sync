@@ -11,7 +11,14 @@ import { CardComponent } from 'src/app/components/card/card.component'
 import { PowerSwitchComponent } from 'src/app/components/power-switch/power-switch.component'
 
 @NgModule({
-    imports: [CommonModule, FormsModule, IonicModule, DevicesPageRoutingModule],
-    declarations: [DevicesPage, CardComponent, PowerSwitchComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        DevicesPageRoutingModule,
+        DevicesPage,
+        CardComponent,
+        PowerSwitchComponent,
+    ],
 })
 export class DevicesPageModule {}

@@ -1,22 +1,38 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
-import { ModalController, IonToggle } from '@ionic/angular'
+import { ModalController, IonToggle, IonicModule } from '@ionic/angular'
+import { FormsModule } from '@angular/forms'
+import { IconComponent } from '../../../../../components/icon/icon.component'
+import { ConfigSchedule } from 'src/app/models/schedule-simple'
+import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
+import { minutesToMilliseconds, minutesToSeconds } from 'src/app/utils/timmer'
 
 @Component({
     selector: 'app-controls',
     templateUrl: './controls.page.html',
     styleUrls: ['./controls.page.scss'],
+    standalone: true,
+    imports: [IconComponent, IonicModule, FormsModule],
 })
-export class ControlsPage {
+export class ControlsPage implements OnInit {
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
+    @ViewChild('containerRef', { static: false }) container?: ElementRef // Sirve ??
     actionValue: string = 'turnOn'
-    timeValue: string = '10'
-    shouldOpenModal: boolean = true // Control para determinar si se debe abrir la modal
+    timeValue: string = '1'
+    shouldOpenModal: boolean = true
+    deviceId: string
+    configSchedule: ConfigSchedule
+    taskId: string
 
     constructor(
         private router: Router,
-        private modalController: ModalController
+        private modalController: ModalController,
+        private smartthingsService: SmartThingsService
     ) {}
+
+    ngOnInit(): void {
+        this.deviceId = window.history.state.device.deviceId
+    }
 
     handleGoBackButton = () => {
         this.router.navigate([`tabs/devices/`])
@@ -29,8 +45,16 @@ export class ControlsPage {
             if (this.toggle.checked && this.shouldOpenModal) {
                 await this.openModal()
             } else if (!this.toggle.checked) {
-                this.shouldOpenModal = true // Resetear el control para la próxima vez que se active
+                this.shouldOpenModal = true
+                await this.cancelScheduledTask()
             }
+        }
+    }
+
+    containerClicked = async () => {
+        if (this.toggle && this.toggle.checked) {
+            this.shouldOpenModal = true
+            await this.cancelScheduledTask()
         }
     }
 
@@ -50,8 +74,6 @@ export class ControlsPage {
 
     cancel() {
         this.modalController.dismiss(null, 'cancel')
-
-        // Desactivar el toggle
         if (this.toggle) {
             this.toggle.checked = false
         }
@@ -59,11 +81,26 @@ export class ControlsPage {
 
     confirm() {
         this.modalController.dismiss(null, 'confirm')
-        this.shouldOpenModal = false // Desactivar el control para la próxima vez que se active
-        console.log(this.actionValue, this.timeValue)
+        this.shouldOpenModal = false
+        this.configSchedule = {
+            deviceId: this.deviceId,
+            action: this.actionValue,
+            delay: minutesToMilliseconds(this.timeValue),
+        }
+        this.smartthingsService.scheduleSimpleDevice(this.configSchedule).then((resp) => {
+            this.taskId = resp.taskId
+        })
     }
 
-    onWillDismiss(event: Event) {
-        // Tu lógica aquí
+    private async cancelScheduledTask() {
+        if (this.taskId) {
+            try {
+                await this.smartthingsService.cancelScheduledTask(this.taskId)
+                console.log('Tarea cancelada con éxito')
+                this.taskId = ''
+            } catch (error) {
+                console.error('Error al cancelar la tarea', error)
+            }
+        }
     }
 }

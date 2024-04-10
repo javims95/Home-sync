@@ -5,6 +5,7 @@ import { SmartThingsService } from 'src/app/services/smart-things/smart-things.s
     selector: 'app-power-switch',
     templateUrl: './power-switch.component.html',
     styleUrls: ['./power-switch.component.scss'],
+    standalone: true,
 })
 export class PowerSwitchComponent implements OnInit {
     @Input() index: number = 0

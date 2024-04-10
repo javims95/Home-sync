@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
     selector: 'app-icon',
     templateUrl: './icon.component.html',
     styleUrls: ['./icon.component.scss'],
+    standalone: true,
 })
 export class IconComponent implements OnInit {
     @Input() name: string = ''

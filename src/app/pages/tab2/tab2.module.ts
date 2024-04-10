@@ -7,7 +7,6 @@ import { Tab2Page } from './tab2.page'
 import { Tab2PageRoutingModule } from './tab2-routing.module'
 
 @NgModule({
-    imports: [IonicModule, CommonModule, FormsModule, Tab2PageRoutingModule],
-    declarations: [Tab2Page],
+    imports: [IonicModule, CommonModule, FormsModule, Tab2PageRoutingModule, Tab2Page],
 })
 export class Tab2PageModule {}

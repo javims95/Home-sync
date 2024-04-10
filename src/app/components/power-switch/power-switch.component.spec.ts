@@ -9,8 +9,7 @@ describe('PowerSwitchComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [PowerSwitchComponent],
-            imports: [IonicModule.forRoot()],
+            imports: [IonicModule.forRoot(), PowerSwitchComponent],
         }).compileComponents()
 
         fixture = TestBed.createComponent(PowerSwitchComponent)
