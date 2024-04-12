@@ -46,7 +46,7 @@ export class ControlsPage implements OnInit {
                 await this.openModal()
             } else if (!this.toggle.checked) {
                 this.shouldOpenModal = true
-                await this.cancelScheduledTask()
+                await this.cancelScheduledTask() // Hay que almacenar y enviar el taskId
             }
         }
     }
@@ -54,7 +54,7 @@ export class ControlsPage implements OnInit {
     containerClicked = async () => {
         if (this.toggle && this.toggle.checked) {
             this.shouldOpenModal = true
-            await this.cancelScheduledTask()
+            await this.cancelScheduledTask() // Hay que almacenar y enviar el taskId
         }
     }
 
@@ -87,12 +87,21 @@ export class ControlsPage implements OnInit {
             action: this.actionValue,
             delay: minutesToMilliseconds(this.timeValue),
         }
-        this.smartthingsService.scheduleSimpleDevice(this.configSchedule).then((resp) => {
-            this.taskId = resp.taskId
-        })
+        this.smartthingsService
+            .scheduleSimpleDevice(this.configSchedule)
+            .then((resp) => {
+                this.taskId = resp.taskId
+                console.log(this.taskId)
+            })
+            .catch((error) => {
+                console.log('Error al programar el dispositivo ', error)
+                if (this.toggle) {
+                    this.toggle.checked = false
+                }
+            })
     }
 
-    private async cancelScheduledTask() {
+    cancelScheduledTask = async () => {
         if (this.taskId) {
             try {
                 await this.smartthingsService.cancelScheduledTask(this.taskId)

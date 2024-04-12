@@ -8,7 +8,7 @@ const {
     turnOff,
     getStatus,
     simpleSchedule,
-    cancelScheduledTask,
+    cancelTask,
 } = require('../../controllers/smartthingsController')
 
 router.get('/devices', getDevices)
@@ -20,6 +20,6 @@ router.post('/devices/:deviceId/turn-on', turnOn)
 router.post('/devices/:deviceId/turn-off', turnOff)
 router.post('/devices/:deviceId/simple-schedule', simpleSchedule)
 
-router.delete('/tasks/:taskId', cancelScheduledTask)
+router.delete('/cancel-task/:taskId', cancelTask)
 
 module.exports = router

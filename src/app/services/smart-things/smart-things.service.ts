@@ -84,17 +84,26 @@ export class SmartThingsService {
     }
 
     cancelScheduledTask = async (taskId: string) => {
-        const response = await fetch(`${environment.SMART_THINGS_API_BASE_URL}/tasks/${taskId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+        const response = await fetch(
+            `${environment.SMART_THINGS_API_BASE_URL}/cancel-task/${taskId}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
 
         if (!response.ok) {
             throw new Error('No se pudo cancelar la tarea programada')
         }
 
-        return await response.json()
+        // Verificar si la respuesta está vacía
+        const responseBody = await response.text()
+        if (!responseBody.trim()) {
+            return
+        }
+
+        return JSON.parse(responseBody)
     }
 }

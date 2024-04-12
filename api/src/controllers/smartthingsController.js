@@ -4,9 +4,11 @@ const {
     getDeviceStatus,
     turnOnDevice,
     turnOffDevice,
-    scheduleDeviceOn,
-    scheduleDeviceOff,
+    scheduleSimpleTask,
+    cancelSimpleTask,
 } = require('../services/smartthingsService')
+
+const conexion = require('../database/conexion')
 
 // Objeto para almacenar las tareas
 const taskRegistry = {}
@@ -113,39 +115,97 @@ const turnOff = async (req, res) => {
 //     }
 // }
 
+// const simpleSchedule = async (req, res) => {
+//     const { deviceId, action, delay } = req.body;
+
+//     try {
+//         const taskId = await scheduleSimpleTask(deviceId, action, delay);
+
+//         // Almacenar la referencia del timeout
+//         const timeoutId = setTimeout(async () => {
+//             try {
+//                 if (action === 'turnOn') {
+//                     await turnOnDevice(deviceId);
+//                 } else if (action === 'turnOff') {
+//                     await turnOffDevice(deviceId);
+//                 }
+
+//                 // Actualizar el estado de la tarea en la base de datos
+//                 const updateSql = 'UPDATE tasks SET status = ? WHERE taskId = ?';
+//                 conexion.query(updateSql, ['completed', taskId], (error) => {
+//                     if (error) {
+//                         console.error('Error al actualizar el estado de la tarea:', error);
+//                     }
+//                 });
+
+//                 delete taskRegistry[taskId]; // Limpia la referencia una vez ejecutada la tarea
+//             } catch (error) {
+//                 console.error(error);
+//             }
+//         }, delay);
+
+//         res.json({
+//             message: `Tarea programada para ${action} el dispositivo ${deviceId} en ${delay / 60 / 1000} minutos.`,
+//             taskId: taskId,
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error al programar la tarea.' });
+//     }
+// };
+
 const simpleSchedule = async (req, res) => {
     const { deviceId, action, delay } = req.body
-    const taskId = `task-${deviceId}-${Date.now()}` // Generar un ID único para la tarea
 
-    // Almacenar la referencia del timeout
-    taskRegistry[taskId] = setTimeout(async () => {
-        try {
-            if (action === 'turnOn') {
-                await turnOnDevice(deviceId)
-            } else if (action === 'turnOff') {
-                await turnOffDevice(deviceId)
+    try {
+        const taskId = await scheduleSimpleTask(deviceId, action, delay)
+
+        // Almacenar la referencia del timeout
+        taskRegistry[taskId] = setTimeout(async () => {
+            try {
+                if (action === 'turnOn') {
+                    await turnOnDevice(deviceId)
+                } else if (action === 'turnOff') {
+                    await turnOffDevice(deviceId)
+                }
+
+                // Actualizar el estado de la tarea en la base de datos
+                const updateSql = 'UPDATE tasks SET status = ? WHERE task_id = ?'
+                conexion.query(updateSql, ['completed', taskId], (error) => {
+                    if (error) {
+                        console.error('Error al actualizar el estado de la tarea:', error)
+                    }
+                })
+
+                delete taskRegistry[taskId] // Limpia la referencia una vez ejecutada la tarea
+            } catch (error) {
+                console.error(error)
             }
-            delete taskRegistry[taskId] // Limpia la referencia una vez ejecutada la tarea
-        } catch (error) {
-            console.error(error)
-        }
-    }, delay)
+        }, delay)
 
-    res.json({
-        message: `Tarea programada para ${action} el dispositivo ${deviceId} en ${delay / 60 / 1000} minutos.`,
-        taskId: taskId,
-    })
+        res.json({
+            message: `Tarea programada para ${action} el dispositivo ${deviceId} en ${delay / 60 / 1000} minutos.`,
+            taskId: taskId,
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: 'Error al programar la tarea.' })
+    }
 }
-
-const cancelScheduledTask = (req, res) => {
+const cancelTask = async (req, res) => {
     const { taskId } = req.params
 
-    if (taskRegistry[taskId]) {
-        clearTimeout(taskRegistry[taskId])
-        delete taskRegistry[taskId] // Eliminar la referencia de la tarea cancelada
-        res.json({ message: `Tarea ${taskId} cancelada con éxito.` })
-    } else {
-        res.status(404).json({ message: `Tarea ${taskId} no encontrada.` })
+    try {
+        // Cancelar el setTimeout
+        if (taskRegistry[taskId]) {
+            clearTimeout(taskRegistry[taskId])
+            delete taskRegistry[taskId]
+        }
+
+        const result = await cancelSimpleTask(taskId)
+        res.json(result)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 }
 
@@ -157,5 +217,5 @@ module.exports = {
     turnOff,
     getStatus,
     simpleSchedule,
-    cancelScheduledTask,
+    cancelTask,
 }

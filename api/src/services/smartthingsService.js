@@ -1,4 +1,5 @@
 const axios = require('axios')
+const conexion = require('../database/conexion')
 const cron = require('node-cron')
 const { exec } = require('child_process')
 
@@ -104,54 +105,64 @@ const turnOffDevice = async (deviceId) => {
     }
 }
 
-const scheduleDeviceOn = async (deviceId, delaySeconds) => {
-    // Define la tarea cron para encender el dispositivo
-    const task = cron.schedule(
-        `*/${delaySeconds} * * * * *`,
-        async () => {
-            try {
-                const response = await turnOnDevice(deviceId)
-                console.log(`Dispositivo ${deviceId} encendido:`, response)
+// TASKS
+const scheduleSimpleTask = async (deviceId, action, delay) => {
+    const taskId = `task-${deviceId}-${Date.now()}`
 
-                // Detiene la tarea cron después de ejecutarse
-                task.stop()
-            } catch (error) {
-                console.error(`Error al encender el dispositivo ${deviceId}:`, error)
+    const taskData = {
+        task_id: taskId,
+        device_id: deviceId,
+        type_schedule: 'simple',
+        action: action,
+        delay: delay,
+        scheduled_at: new Date().toISOString(),
+        status: 'scheduled',
+    }
+
+    const sql = 'INSERT INTO tasks SET ?'
+
+    return new Promise((resolve, reject) => {
+        conexion.query(sql, taskData, (error, results) => {
+            if (error) {
+                reject(error)
+                return
             }
-        },
-        {
-            scheduled: true,
-            timezone: 'Europe/Madrid', // Zona horaria ajustada a Madrid
-        }
-    )
 
-    // Retorna el ID de la tarea cron
-    return task.id
+            resolve(taskId)
+        })
+    })
 }
 
-const scheduleDeviceOff = async (deviceId, delaySeconds) => {
-    // Define la tarea cron para encender el dispositivo
-    const task = cron.schedule(
-        `*/${delaySeconds} * * * * *`,
-        async () => {
-            try {
-                const response = await turnOffDevice(deviceId)
-                console.log(`Dispositivo ${deviceId} encendido:`, response)
-
-                // Detiene la tarea cron después de ejecutarse
-                task.stop()
-            } catch (error) {
-                console.error(`Error al encender el dispositivo ${deviceId}:`, error)
+const cancelSimpleTask = async (taskId) => {
+    try {
+        // Consultar la tarea por taskId
+        const sql = 'SELECT * FROM tasks WHERE task_id = ?'
+        conexion.query(sql, [taskId], (error, rows) => {
+            if (error) {
+                throw error
             }
-        },
-        {
-            scheduled: true,
-            timezone: 'Europe/Madrid', // Zona horaria ajustada a Madrid
-        }
-    )
+            console.log(rows)
 
-    // Retorna el ID de la tarea cron
-    return task.id
+            if (rows.length === 0) {
+                throw new Error('Tarea no encontrada')
+            }
+
+            // Eliminar la tarea de la base de datos
+            const deleteSql = 'DELETE FROM tasks WHERE task_id = ?'
+            conexion.query(deleteSql, [taskId], (deleteError) => {
+                if (deleteError) {
+                    throw deleteError
+                }
+
+                return {
+                    message: `Tarea cancelada exitosamente.`,
+                    taskId: taskId,
+                }
+            })
+        })
+    } catch (error) {
+        throw new Error(`Error al cancelar la tarea: ${error.message}`)
+    }
 }
 
 module.exports = {
@@ -160,6 +171,6 @@ module.exports = {
     getDeviceStatus,
     turnOnDevice,
     turnOffDevice,
-    scheduleDeviceOn,
-    scheduleDeviceOff,
+    scheduleSimpleTask,
+    cancelSimpleTask,
 }
