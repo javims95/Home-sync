@@ -34,7 +34,7 @@
                     <div class="modal-content">
                         <!-- Modal content -->
                         <div class="my">
-                            <ion-radio-group [(ngModel)]="actionValue" value="turnOn">
+                            <ion-radio-group [(ngModel)]="actionValue">
                                 <ion-item>
                                     <ion-radio labelPlacement="end" value="turnOn" justify="start"
                                         >Encender</ion-radio
@@ -48,12 +48,10 @@
                             </ion-radio-group>
                         </div>
                         <div class="my">
-                            <ion-radio-group [(ngModel)]="timeValue" value="1">
-                                <ion-item>
-                                    <ion-radio labelPlacement="end" value="1" justify="start"
-                                        >Después de 1 minuto</ion-radio
-                                    >
-                                </ion-item>
+                            <ion-radio-group
+                                [(ngModel)]="timeValue"
+                                (ionChange)="handleRadioChange($event)"
+                            >
                                 <ion-item>
                                     <ion-radio labelPlacement="end" value="10" justify="start"
                                         >Después de 10 minutos</ion-radio
@@ -80,6 +78,12 @@
                                     >
                                 </ion-item>
                             </ion-radio-group>
+                            <div id="dateTime" [hidden]="!showDatetime">
+                                <ion-datetime
+                                    (ionChange)="handleDatetimeChange($event)"
+                                    presentation="time"
+                                ></ion-datetime>
+                            </div>
                         </div>
                     </div>
                     <ion-toolbar>

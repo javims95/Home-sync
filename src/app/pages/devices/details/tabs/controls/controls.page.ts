@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms'
 import { IconComponent } from '../../../../../components/icon/icon.component'
 import { ConfigSchedule } from 'src/app/models/schedule-simple'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
-import { minutesToMilliseconds, minutesToSeconds } from 'src/app/utils/timmer'
+import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer'
 
 @Component({
     selector: 'app-controls',
@@ -16,9 +16,10 @@ import { minutesToMilliseconds, minutesToSeconds } from 'src/app/utils/timmer'
 })
 export class ControlsPage implements OnInit {
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
-    @ViewChild('containerRef', { static: false }) container?: ElementRef // Sirve ??
+    // @ViewChild('containerRef', { static: false }) container?: ElementRef
     actionValue: string = 'turnOn'
-    timeValue: string = '1'
+    timeValue: string = '10'
+    showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
     configSchedule: ConfigSchedule
@@ -77,6 +78,9 @@ export class ControlsPage implements OnInit {
         if (this.toggle) {
             this.toggle.checked = false
         }
+        // Resetear valores
+        this.showDatetime = false
+        this.timeValue = '10'
     }
 
     confirm() {
@@ -111,5 +115,22 @@ export class ControlsPage implements OnInit {
                 console.error('Error al cancelar la tarea', error)
             }
         }
+    }
+
+    handleRadioChange(event: CustomEvent) {
+        if (event.detail.value === 'custom') {
+            // Mostrar el elemento de fecha y hora personalizado
+            this.showDatetime = true
+        } else {
+            // Ocultar el elemento de fecha y hora personalizado
+            this.showDatetime = false
+        }
+    }
+
+    // NO FUNCIONA BIEN, CUANDO SE PROGRAMA SE ENCIENDE INMEDIATAMENTE
+    handleDatetimeChange(event: CustomEvent) {
+        // Actualizar el valor de customTime cuando cambia la fecha y hora personalizada
+        this.timeValue = calculateTimeDifferenceInMinutes(event.detail.value)
+        console.log(this.timeValue) // Asegúrate de que customTime tenga un valor asignado
     }
 }
