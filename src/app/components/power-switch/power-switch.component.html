@@ -3,7 +3,7 @@
         id="checkbox-{{ index }}"
         type="checkbox"
         [checked]="checked"
-        data-device-id="deviceId"
+        [attr.data-deviceId]="deviceId"
         (click)="toggleDevice()"
     />
     <label class="button" for="checkbox-{{ index }}">

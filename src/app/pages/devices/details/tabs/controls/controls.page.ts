@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { ModalController, IonToggle, IonicModule } from '@ionic/angular'
 import { FormsModule } from '@angular/forms'
@@ -17,11 +17,12 @@ import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app
 export class ControlsPage implements OnInit {
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
     // @ViewChild('containerRef', { static: false }) container?: ElementRef
-    actionValue: string = 'turnOn'
+    actionValue: string
     timeValue: string = '10'
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
+    deviceStatus: string
     configSchedule: ConfigSchedule
     taskId: string
 
@@ -33,6 +34,9 @@ export class ControlsPage implements OnInit {
 
     ngOnInit(): void {
         this.deviceId = window.history.state.device.deviceId
+        this.deviceStatus = window.history.state.device.status
+        this.deviceStatus === 'on' ? (this.actionValue = 'turnOff') : (this.actionValue = 'turnOn')
+        console.log(this.actionValue)
     }
 
     handleGoBackButton = () => {
@@ -73,7 +77,7 @@ export class ControlsPage implements OnInit {
         }
     }
 
-    cancel() {
+    cancel = () => {
         this.modalController.dismiss(null, 'cancel')
         if (this.toggle) {
             this.toggle.checked = false
@@ -83,7 +87,7 @@ export class ControlsPage implements OnInit {
         this.timeValue = '10'
     }
 
-    confirm() {
+    confirm = () => {
         this.modalController.dismiss(null, 'confirm')
         this.shouldOpenModal = false
         this.configSchedule = {
@@ -117,20 +121,16 @@ export class ControlsPage implements OnInit {
         }
     }
 
-    handleRadioChange(event: CustomEvent) {
+    handleRadioChange = (event: CustomEvent) => {
         if (event.detail.value === 'custom') {
-            // Mostrar el elemento de fecha y hora personalizado
             this.showDatetime = true
         } else {
-            // Ocultar el elemento de fecha y hora personalizado
             this.showDatetime = false
         }
     }
 
     // NO FUNCIONA BIEN, CUANDO SE PROGRAMA SE ENCIENDE INMEDIATAMENTE
-    handleDatetimeChange(event: CustomEvent) {
-        // Actualizar el valor de customTime cuando cambia la fecha y hora personalizada
+    handleDatetimeChange = (event: CustomEvent) => {
         this.timeValue = calculateTimeDifferenceInMinutes(event.detail.value)
-        console.log(this.timeValue) // Asegúrate de que customTime tenga un valor asignado
     }
 }
