@@ -46,7 +46,7 @@ export class ControlsPage implements OnInit, AfterViewInit {
     }
 
     handleGoBackButton = () => {
-        this.router.navigate([`tabs/devices/`])
+        this.router.navigate([`devices/`])
     }
 
     toggleChanged = async () => {
