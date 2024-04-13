@@ -52,3 +52,13 @@ export interface DevicesResponse {
     items: Device[]
     _links: {}
 }
+
+export enum DeviceAction {
+    encender = 'turnOn',
+    apagar = 'turnOff',
+}
+
+export enum DeviceStatus {
+    on = 'on',
+    off = 'off',
+}

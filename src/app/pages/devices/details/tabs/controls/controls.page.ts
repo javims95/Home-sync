@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { ModalController, IonToggle, IonicModule } from '@ionic/angular'
 import { FormsModule } from '@angular/forms'
@@ -6,6 +6,8 @@ import { IconComponent } from '../../../../../components/icon/icon.component'
 import { ConfigSchedule } from 'src/app/models/schedule-simple'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
 import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer'
+import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model'
+import { deleteCookie, getCookie, setCookie } from 'src/app/utils/storage'
 
 @Component({
     selector: 'app-controls',
@@ -14,15 +16,13 @@ import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app
     standalone: true,
     imports: [IconComponent, IonicModule, FormsModule],
 })
-export class ControlsPage implements OnInit {
+export class ControlsPage implements OnInit, AfterViewInit {
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
-    // @ViewChild('containerRef', { static: false }) container?: ElementRef
-    actionValue: string
+    actionValue: DeviceAction
     timeValue: string = '10'
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
-    deviceStatus: string
     configSchedule: ConfigSchedule
     taskId: string
 
@@ -34,9 +34,15 @@ export class ControlsPage implements OnInit {
 
     ngOnInit(): void {
         this.deviceId = window.history.state.device.deviceId
-        this.deviceStatus = window.history.state.device.status
-        this.deviceStatus === 'on' ? (this.actionValue = 'turnOff') : (this.actionValue = 'turnOn')
-        console.log(this.actionValue)
+        this.smartthingsService.getStatus(this.deviceId).then((response: DeviceStatus) => {
+            response === DeviceStatus.on
+                ? (this.actionValue = DeviceAction.apagar)
+                : (this.actionValue = DeviceAction.encender)
+        })
+    }
+
+    ngAfterViewInit(): void {
+        getCookie(this.deviceId, 'Simple') && (this.toggle.checked = true)
     }
 
     handleGoBackButton = () => {
@@ -99,7 +105,7 @@ export class ControlsPage implements OnInit {
             .scheduleSimpleDevice(this.configSchedule)
             .then((resp) => {
                 this.taskId = resp.taskId
-                console.log(this.taskId)
+                setCookie(this.deviceId, 'Simple', this.timeValue)
             })
             .catch((error) => {
                 console.log('Error al programar el dispositivo ', error)
@@ -115,6 +121,7 @@ export class ControlsPage implements OnInit {
                 await this.smartthingsService.cancelScheduledTask(this.taskId)
                 console.log('Tarea cancelada con éxito')
                 this.taskId = ''
+                deleteCookie(this.deviceId, 'Simple')
             } catch (error) {
                 console.error('Error al cancelar la tarea', error)
             }
@@ -129,7 +136,6 @@ export class ControlsPage implements OnInit {
         }
     }
 
-    // NO FUNCIONA BIEN, CUANDO SE PROGRAMA SE ENCIENDE INMEDIATAMENTE
     handleDatetimeChange = (event: CustomEvent) => {
         this.timeValue = calculateTimeDifferenceInMinutes(event.detail.value)
     }

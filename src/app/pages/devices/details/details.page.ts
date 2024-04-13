@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Device } from 'src/app/models/devices.model'
+import { Device } from 'src/app/models/smart-things.model'
 import { IonicModule } from '@ionic/angular'
 import { ActivatedRoute } from '@angular/router'
 

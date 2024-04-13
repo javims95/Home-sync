@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Device, DevicesResponse } from 'src/app/models/devices.model'
+import { Device, DevicesResponse } from 'src/app/models/smart-things.model'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
 import { DEVICES } from './conf/constants'
 import { GoveeService } from 'src/app/services/govee/govee.service'
