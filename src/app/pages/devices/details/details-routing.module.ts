@@ -14,8 +14,8 @@ const routes: Routes = [
                     import('./tabs/controls/controls.module').then((m) => m.ControlsPageModule),
             },
             {
-                path: 'tab2',
-                loadChildren: () => import('./tabs/tab2/tab2.module').then((m) => m.Tab2PageModule),
+                path: 'routines',
+                loadChildren: () => import('./tabs/routines/routines.module').then( m => m.RoutinesPageModule)
             },
             {
                 path: '',
