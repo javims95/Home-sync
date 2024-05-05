@@ -1,0 +1,56 @@
+@import '../../../../../styles/flexbox-layout.scss';
+
+.routines-container {
+    .header {
+        background-color: #3880ff;
+        color: #fff;
+        padding: 20px;
+        .toolbar {
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .content {
+        padding: 10px;
+
+        .round-container {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+
+            .text-muted {
+                font-size: 14px;
+                margin: 10px 0;
+                color: #808080;
+            }
+        }
+    }
+}
+
+.header-info {
+    padding: 0 8px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(
+        100vh - 112px
+    );
+    overflow-y: auto;
+    background-color: #f6f6f6;
+}
+
+ion-toolbar {
+    --background: #f6f6f6
+}
+
+.my {
+    margin: 10px 0;
+}
+
+.my:first-child {
+    margin-top: 0;
+}

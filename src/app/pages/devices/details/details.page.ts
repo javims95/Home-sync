@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { Device } from 'src/app/models/smart-things.model'
 import { IonicModule } from '@ionic/angular'
-import { ActivatedRoute } from '@angular/router'
 
 @Component({
     selector: 'app-details',
@@ -10,16 +9,9 @@ import { ActivatedRoute } from '@angular/router'
     standalone: true,
     imports: [IonicModule],
 })
-export class DetailsPage implements OnInit {
+export class DetailsPage {
     device: Device = {} as Device
     deviceId: string
 
-    constructor(private route: ActivatedRoute) {}
-
-    ngOnInit() {
-        const navigation = window.history.state
-        if (navigation.device) {
-            this.device = navigation.device
-        }
-    }
+    constructor() {}
 }

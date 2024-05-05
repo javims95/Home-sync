@@ -1,13 +1,55 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>routines</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="routines-container">
+    <div class="header">
+        <div class="toolbar row align-items-center">
+            <app-icon
+                name="arrow-left-solid.svg"
+                color="#fff"
+                (iconClick)="handleGoBackButton()"
+                class="col-2"
+            ></app-icon>
+            <div class="title col-6">Rutinas</div>
+        </div>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">routines</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+    <div class="content bg-light-grey">
+        <div class="round-container" (click)="toggleChanged()">
+            <ion-toggle id="open-modal" #toggleRef (ionChange)="toggleChanged()"
+                >Encendido y apagado</ion-toggle
+            >
+            <p class="text-muted">Ejemplo: Activar los L,X,V de 14:30 a 15:30</p>
+            <!-- Modal -->
+            <ion-modal>
+                <ng-template>
+                    <ion-toolbar>
+                        <div class="row header-info align-items-start">
+                            <app-icon
+                                name="angle-left-solid.svg"
+                                color="#000"
+                                (iconClick)="cancel()"
+                                class="col-2"
+                            ></app-icon>
+                            <ion-title class="col-6">Rutinas</ion-title>
+                        </div>
+                    </ion-toolbar>
+                    <div class="modal-content">
+                        <!-- Modal content -->
+                        <div class="my">
+                            <app-time-picker></app-time-picker>
+                        </div>
+                        <div class="my">
+                          
+                        </div>
+                    </div>
+                    <ion-toolbar>
+                        <ion-buttons slot="start">
+                            <ion-button (click)="cancel()">Cancelar</ion-button>
+                        </ion-buttons>
+                        <ion-buttons slot="end">
+                            <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ng-template>
+            </ion-modal>
+        </div>
+    </div>
+</div>

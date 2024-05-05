@@ -1,0 +1,23 @@
+.timepicker {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .hour {
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+
+        span {
+            padding-right: 10px;
+        }
+
+        hr {
+            flex-grow: 1;
+            height: 1px;
+            border: none;
+            background-color: black;
+            margin: 0;
+        }
+    }
+}

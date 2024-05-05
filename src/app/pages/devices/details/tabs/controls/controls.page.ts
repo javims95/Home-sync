@@ -7,7 +7,14 @@ import { ConfigSchedule } from 'src/app/models/schedule-simple'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
 import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer'
 import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model'
-import { deleteCookie, getCookie, setCookie } from 'src/app/utils/storage'
+import {
+    deleteCookie,
+    getCookie,
+    getSessionStorageItem,
+    removeSessionStorageItem,
+    setCookie,
+} from 'src/app/utils/storage'
+import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
 
 @Component({
     selector: 'app-controls',
@@ -29,16 +36,15 @@ export class ControlsPage implements OnInit, AfterViewInit {
     constructor(
         private router: Router,
         private modalController: ModalController,
-        private smartthingsService: SmartThingsService
+        private smartthingsService: SmartThingsService,
+        private globalStateService: GlobalStateService
     ) {}
 
     ngOnInit(): void {
-        this.deviceId = window.history.state.device.deviceId
-        this.smartthingsService.getStatus(this.deviceId).then((response: DeviceStatus) => {
-            response === DeviceStatus.on
-                ? (this.actionValue = DeviceAction.apagar)
-                : (this.actionValue = DeviceAction.encender)
-        })
+        this.deviceId = getSessionStorageItem('currentDeviceId')
+        this.globalStateService.getDeviceById(this.deviceId).status === DeviceStatus.on
+            ? (this.actionValue = DeviceAction.apagar)
+            : (this.actionValue = DeviceAction.encender)
     }
 
     ngAfterViewInit(): void {
@@ -46,6 +52,7 @@ export class ControlsPage implements OnInit, AfterViewInit {
     }
 
     handleGoBackButton = () => {
+        removeSessionStorageItem('currentDeviceId')
         this.router.navigate([`devices/`])
     }
 
@@ -57,7 +64,7 @@ export class ControlsPage implements OnInit, AfterViewInit {
                 await this.openModal()
             } else if (!this.toggle.checked) {
                 this.shouldOpenModal = true
-                await this.cancelScheduledTask() // Hay que almacenar y enviar el taskId
+                await this.cancelScheduledTask()
             }
         }
     }
@@ -65,7 +72,7 @@ export class ControlsPage implements OnInit, AfterViewInit {
     containerClicked = async () => {
         if (this.toggle && this.toggle.checked) {
             this.shouldOpenModal = true
-            await this.cancelScheduledTask() // Hay que almacenar y enviar el taskId
+            await this.cancelScheduledTask()
         }
     }
 

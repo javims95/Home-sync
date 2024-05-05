@@ -38,7 +38,7 @@
     flex-direction: column;
     height: calc(
         100vh - 112px
-    ); /* Aquí, 112px es la altura total del ion-header y ion-footer combinados */
+    );
     overflow-y: auto;
     background-color: #f6f6f6;
 }
