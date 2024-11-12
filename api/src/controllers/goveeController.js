@@ -3,6 +3,8 @@ const { v4: uuidv4 } = require('uuid')
 
 const getDevices = async (req, res) => {
     const apiKey = process.env.GOVEE_API_KEY
+    console.log(apiKey);
+    
 
     try {
         const devices = await getAllDevices(apiKey)

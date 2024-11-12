@@ -1,5 +1,4 @@
 # Home Sync
-
 ## Primeros pasos:
 ### Versiones:
 * XAMPP: 8.2.12
@@ -11,5 +10,6 @@
 * `npm install`
 * `cd api && npm install && cd ..`
 * `ionic build`
+* `npx cap sync`
 * `npx cap open android`
 * `npx cap run android`
