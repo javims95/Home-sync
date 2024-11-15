@@ -5,7 +5,7 @@
     "homepage": "https://ionicframework.com/",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve --open",
         "open": "ionic cap open android",
         "run": "ionic cap run android -l --external",
         "backend": "cd api && node src/index.js",

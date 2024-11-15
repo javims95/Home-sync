@@ -1,12 +1,16 @@
 @import '../../styles/flexbox-layout.scss';
 
 .header {
-    background-color: #3880ff; /* Color de fondo del header de Ionic */
-    color: #fff; /* Color de texto del header de Ionic */
-    padding: 20px; /* Espaciado interno */
+    background-color: #3880ff;
+    color: #fff;
+    padding: 20px;
     .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
         .title {
-            font-size: 1.5rem; /* Tamaño de fuente del título */
+            font-size: 1.5rem;
         }
     }
 }
@@ -17,7 +21,7 @@
     #condensed-header {
         .toolbar {
             .title.large {
-                font-size: 2rem; /* Tamaño de fuente del título en modo condensado */
+                font-size: 2rem;
             }
         }
     }

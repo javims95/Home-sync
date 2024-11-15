@@ -89,6 +89,12 @@ export class GlobalStateService {
         }
     }
 
+    filterDevicesWithoutOutlet(): void {
+        const devices = this.devicesSubject.getValue();
+        const filteredDevices = devices.filter(device => !device.label.toLowerCase().includes('outlet'));
+        this.devicesSubject.next(filteredDevices);
+    }       
+
     updateDeviceStatus(deviceId: string, newStatus: string): void {
         const devices = this.devicesSubject.getValue()
         const deviceIndex = devices.findIndex((device) => device.deviceId === deviceId)

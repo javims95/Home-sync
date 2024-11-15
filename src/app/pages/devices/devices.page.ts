@@ -7,13 +7,14 @@ import { NgFor } from '@angular/common'
 import { IonicModule } from '@ionic/angular'
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
 import { setSessionStorageItem } from 'src/app/utils/storage'
+import { FormsModule } from '@angular/forms'
 
 @Component({
     selector: 'app-devices',
     templateUrl: './devices.page.html',
     styleUrls: ['./devices.page.scss'],
     standalone: true,
-    imports: [IonicModule, NgFor, CardComponent],
+    imports: [IonicModule, NgFor, CardComponent, FormsModule],
 })
 export class DevicesPage implements OnInit {
     devices: Device[]
@@ -68,5 +69,20 @@ export class DevicesPage implements OnInit {
 
         setSessionStorageItem('currentDeviceId', device.deviceId)
         this.router.navigate([`devices/details/${device.deviceId}/controls`])
+    }
+
+    hideOutletDevices = () => {
+        this.globalState.filterDevicesWithoutOutlet();
+    }
+
+    onToggleHideOutletDevices(event: any) {
+        const isChecked = event.detail.checked;
+        if (isChecked) {
+            this.hideOutletDevices();
+        } else {
+            this.globalState.refreshDevices().subscribe((devices: Device[]) => {
+                this.devices = devices;
+            });
+        }
     }
 }

@@ -1,20 +1,47 @@
-<div class="header">
-    <div class="toolbar">
-        <div class="title">Dispositivos</div>
-    </div>
-</div>
+<ion-menu side="end" contentId="main-content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Ajustes</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+        <!-- Checkbox dentro del menú -->
+        <ion-item>
+            <ion-checkbox
+                id="hide-outlet-checkbox"
+                slot="start"
+                (ionChange)="onToggleHideOutletDevices($event)"
+            >
+            </ion-checkbox>
+            <ion-label>Ocultar dispositivos que contengan outlet</ion-label>
+        </ion-item>
+    </ion-content>
+</ion-menu>
 
-<ion-content class="ion-padding bg-light-grey">
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-    <div class="content">
-        <div class="row">
-            <div class="col-6" *ngFor="let device of devices; let i = index">
-                <div class="card-container" (click)="openDetailsPage($event, device)">
-                    <app-card [device]="device" [index]="i"></app-card>
+<div class="ion-page" id="main-content">
+    <div class="header">
+        <div class="toolbar">
+            <div class="title">Dispositivos</div>
+            <ion-buttons slot="end">
+                <ion-menu-button>
+                    <ion-icon name="settings"></ion-icon>
+                </ion-menu-button>
+            </ion-buttons>
+        </div>
+    </div>
+
+    <ion-content class="ion-padding bg-light-grey">
+        <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+            <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <div class="content">
+            <div class="row">
+                <div class="col-6" *ngFor="let device of devices; let i = index">
+                    <div class="card-container" (click)="openDetailsPage($event, device)">
+                        <app-card [device]="device" [index]="i"></app-card>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</ion-content>
+    </ion-content>
+</div>
