@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular'
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
 import { setSessionStorageItem } from 'src/app/utils/storage'
 import { FormsModule } from '@angular/forms'
+import { StorageService } from 'src/app/services/storage/storage.service'
 
 @Component({
     selector: 'app-devices',
@@ -23,6 +24,7 @@ export class DevicesPage implements OnInit {
         private goveeService: GoveeService,
         private router: Router,
         private globalState: GlobalStateService,
+        private storageService: StorageService
     ) {
         // this.notificationsService.scheduleNotification(
         //     'Titulo',
@@ -77,6 +79,7 @@ export class DevicesPage implements OnInit {
 
     onToggleHideOutletDevices(event: any) {
         const isChecked = event.detail.checked;
+        this.storageService.saveItem('hideOutletDevices', isChecked);
         if (isChecked) {
             this.hideOutletDevices();
         } else {

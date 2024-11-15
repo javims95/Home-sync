@@ -11,6 +11,7 @@
                 id="hide-outlet-checkbox"
                 slot="start"
                 (ionChange)="onToggleHideOutletDevices($event)"
+                [checked]="hideOutletDevices"
             >
             </ion-checkbox>
             <ion-label>Ocultar dispositivos que contengan outlet</ion-label>

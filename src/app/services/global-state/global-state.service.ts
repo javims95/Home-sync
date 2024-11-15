@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { Device, DevicesResponse } from 'src/app/models/smart-things.model'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
+import { StorageService } from '../storage/storage.service'
 
 const DEVICES = {
     SAMSUNG: 'Samsung',
@@ -16,13 +17,23 @@ export class GlobalStateService {
     private devicesSubject = new BehaviorSubject<Device[]>([])
     devices$ = this.devicesSubject.asObservable()
 
-    constructor(private smartthingsService: SmartThingsService) {
+    constructor(
+        private smartthingsService: SmartThingsService,
+        private storageService: StorageService
+    ) {
         this.initDevices()
     }
 
     private async initDevices(): Promise<void> {
+        const hideOutletDevices = await this.storageService.getItem('hideOutletDevices')
+
         this.smartthingsService.getDevices().then((response: DevicesResponse) => {
-            this.devicesSubject.next(response.items)
+            let devices = response.items
+
+            if (hideOutletDevices) {
+                devices = devices.filter((device) => !device.label.toLowerCase().includes('outlet'))
+            }
+            this.devicesSubject.next(devices)
             this.initStatusDevices()
         })
     }
@@ -66,7 +77,7 @@ export class GlobalStateService {
         this.devicesSubject.next(devices)
     }
 
-    // Arreglar esta función, no funciona correctamente 
+    // Arreglar esta función, no funciona correctamente
     private getCurrentTVContent(tvChannelName: string): string {
         const parts = tvChannelName.split('.')
         const lastValue = parts[parts.length - 1]
@@ -84,16 +95,18 @@ export class GlobalStateService {
     getDeviceStatus(deviceId: string): string | void {
         const devices = this.devicesSubject.getValue()
         const deviceIndex = devices.findIndex((device) => device.deviceId === deviceId)
-        if(deviceIndex !== -1) {
-            return devices[deviceIndex].status;
+        if (deviceIndex !== -1) {
+            return devices[deviceIndex].status
         }
     }
 
     filterDevicesWithoutOutlet(): void {
-        const devices = this.devicesSubject.getValue();
-        const filteredDevices = devices.filter(device => !device.label.toLowerCase().includes('outlet'));
-        this.devicesSubject.next(filteredDevices);
-    }       
+        const devices = this.devicesSubject.getValue()
+        const filteredDevices = devices.filter(
+            (device) => !device.label.toLowerCase().includes('outlet')
+        )
+        this.devicesSubject.next(filteredDevices)
+    }
 
     updateDeviceStatus(deviceId: string, newStatus: string): void {
         const devices = this.devicesSubject.getValue()
