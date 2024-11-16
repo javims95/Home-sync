@@ -9,7 +9,13 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(cors())
+const corsOptions = {
+	origin: '*',
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions))
 app.use(express.json())
 
 // Middleware para registrar las solicitudes
@@ -19,5 +25,5 @@ app.use(logger)
 app.use('/', mainRoutes)
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`)
+	console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })

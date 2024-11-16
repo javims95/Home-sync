@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    SMART_THINGS_API_BASE_URL: 'http://localhost:3000/smartthings',
-    GOVEE_API_BASE_URL: 'http://localhost:3000/govee',
+    SMART_THINGS_API_BASE_URL: 'http://192.168.1.138:3000/smartthings',
+    GOVEE_API_BASE_URL: 'http://192.168.1.138:3000/govee',
 }
 
 /*

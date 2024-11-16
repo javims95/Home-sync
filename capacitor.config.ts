@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
     appName: 'home-sync',
     webDir: 'www',
     server: {
-        androidScheme: 'https',
+        androidScheme: 'http',
     },
     plugins: {
         LocalNotifications: {

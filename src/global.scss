@@ -28,24 +28,19 @@
 // Fonts
 @font-face {
     font-family: 'Montserrat-Regular';
-    src: url('./assets/fonts/Montserrat-Regular.ttf') format('truetype'); // Asegúrate de especificar la ruta correcta y el nombre del archivo de tu fuente
+    src: url('./assets/fonts/Montserrat-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Montserrat-SemiBold';
-    src: url('./assets/fonts/Montserrat-SemiBold.ttf') format('truetype'); // Asegúrate de especificar la ruta correcta y el nombre del archivo de tu fuente
+    src: url('./assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
-// :root {
-//     --ion-background-color: #f6f6f6;
-// }
-
 body {
     font-family: 'Montserrat-Regular';
-    // overflow: auto;
 }
 
 ion-router-outlet {
