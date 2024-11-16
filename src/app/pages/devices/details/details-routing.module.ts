@@ -18,6 +18,10 @@ const routes: Routes = [
                 loadChildren: () => import('./tabs/routines/routines.module').then( m => m.RoutinesPageModule)
             },
             {
+                path: 'icon-selector',
+                loadChildren: () => import('./tabs/icon-selector/icon-selector.module').then( m => m.IconSelectorPageModule)
+            },
+            {
                 path: '',
                 redirectTo: 'controls',
                 pathMatch: 'full',
@@ -29,6 +33,7 @@ const routes: Routes = [
         loadChildren: () =>
             import('./tabs/controls/controls.module').then((m) => m.ControlsPageModule),
     },
+
 ]
 
 @NgModule({

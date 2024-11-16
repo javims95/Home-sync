@@ -1,0 +1,30 @@
+@import '../../../../../styles/flexbox-layout.scss';
+
+.icon-selector-container {
+    .header {
+        background-color: #3880ff;
+        color: #fff;
+        padding: 20px;
+        .toolbar {
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .content {
+        padding: 10px;
+
+        .round-container {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+
+            .text-muted {
+                font-size: 14px;
+                margin: 10px 0;
+                color: #808080;
+            }
+        }
+    }
+}
