@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonToggle, IonicModule, ModalController } from '@ionic/angular';
 import { IconComponent } from 'src/app/components/icon/icon.component';
-import { TimePickerComponent } from 'src/app/components/time-picker/time-picker/time-picker.component';
+import { TimePickerComponent } from 'src/app/components/time-picker/time-picker.component';
 import { ConfigSchedule } from 'src/app/models/schedule-simple';
 import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model';
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service';
