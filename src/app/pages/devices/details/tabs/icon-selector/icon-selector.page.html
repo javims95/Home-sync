@@ -11,7 +11,16 @@
         </div>
     </div>
 
-    <div class="content bg-light-grey">
-		
-	</div>
+	<div class="content bg-light-grey">
+        <div class="icon-list">
+            <div
+                *ngFor="let icon of iconList"
+                class="icon-item"
+                [ngClass]="{ 'selected': icon === selectedIcon }"
+                (click)="selectIcon(icon)"
+            >
+                <img [src]="'assets/devices-icons/' + icon" [alt]="icon" />
+            </div>
+        </div>
+    </div>
 </div>

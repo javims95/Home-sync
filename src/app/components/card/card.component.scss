@@ -5,7 +5,7 @@
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 16px;
-    background-color: #fcfcfc;
+    background-color: #efefef;
 
     &.disabled {
         .card-content {
@@ -23,4 +23,9 @@
             }
         }
     }
+
+	.device-icon {
+		width: 35px;
+		height: auto;
+	}
 }

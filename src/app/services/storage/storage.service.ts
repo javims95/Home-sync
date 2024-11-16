@@ -9,7 +9,7 @@ export class StorageService {
 
     // Guardar un valor en localStorage con una clave específica
     async saveItem(key: string, value: any): Promise<void> {
-        const valueToStore = JSON.stringify(value) // Convertir el valor a JSON antes de almacenarlo
+        const valueToStore = JSON.stringify(value)
         await Storage.set({
             key,
             value: valueToStore,
@@ -19,7 +19,7 @@ export class StorageService {
     // Recuperar un valor desde localStorage usando una clave
     async getItem<T>(key: string): Promise<T | null> {
         const { value } = await Storage.get({ key })
-        return value ? JSON.parse(value) : null // Devolver el valor parseado a su tipo original
+        return value ? JSON.parse(value) : null
     }
 
     // Eliminar un valor de localStorage
