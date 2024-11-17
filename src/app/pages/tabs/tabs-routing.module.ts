@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { TabsPage } from './tabs.page'
+import { DevicesPage } from '../devices/devices.page'
+import { Tab2Page } from '../tab2/tab2.page'
+import { Tab3Page } from '../tab3/tab3.page'
 
 const routes: Routes = [
     {
@@ -9,19 +12,15 @@ const routes: Routes = [
         children: [
             {
                 path: 'devices',
-                loadChildren: () =>
-                    import('../../pages/devices/devices-routing.module').then(
-                        (m) => m.DevicesPageRoutingModule
-                    ),
+                component: DevicesPage,
             },
             {
                 path: 'tab2',
-                loadChildren: () =>
-                    import('../tab2/tab2-routing.module').then((m) => m.Tab2PageRoutingModule),
+                component: Tab2Page,
             },
             {
                 path: 'tab3',
-                loadChildren: () => import('../tab3/tab3.module').then((m) => m.Tab3PageModule),
+                component: Tab3Page,
             },
             {
                 path: '',
