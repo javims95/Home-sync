@@ -5,6 +5,7 @@
 * Node: 20.11.1
 * Ionic: 7.2.0
 * Java: 17.0.13
+* Angular CLI: 17.3.2
 
 ### Primeros comandos
 * `npm install -g @angular/cli`
