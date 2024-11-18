@@ -7,19 +7,14 @@ import { IconSelectorPage } from './pages/devices/details/tabs/icon-selector/ico
 import { RoutinesPage } from './pages/devices/details/tabs/routines/routines.page'
 
 const routes: Routes = [
-    // Ruta principal de la aplicación
     {
         path: '',
         loadChildren: () => import('./pages/tabs/tabs.module').then((m) => m.TabsPageModule),
     },
-
-    // Ruta para dispositivos
     {
         path: 'devices',
         component: DevicesPage,
     },
-
-    // Ruta para detalles de un dispositivo
     {
         path: 'devices/details/:deviceId',
         component: DetailsPage,
@@ -45,7 +40,7 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '', // Redirige a la página principal o a un 404
+        redirectTo: '',
     },
 ]
 @NgModule({
