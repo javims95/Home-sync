@@ -10,7 +10,7 @@
 ### Primeros comandos
 * `npm install -g @angular/cli`
 * `npm install -g @ionic/cli@7.2.0`
-* `npm install`
+* `npm install --legacy-peer-deps`
 * `cd api && npm install && cd ..`
 * `ionic build`
 * `npx cap sync`
@@ -19,4 +19,4 @@
 
 ## TO-DO:
 * Revisar variables darkMode
-* Revisar tabs controls y routines para que todo funcione con el servicio de storage. También usar función para recuperar el id del la URL
+* Revisar tabs controls y routines para que todo funcione con el servicio de storage.

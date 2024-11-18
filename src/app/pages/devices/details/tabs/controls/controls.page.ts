@@ -15,6 +15,7 @@ import {
     setCookie,
 } from 'src/app/utils/storage'
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
+import { extractDeviceIdFromUrl } from 'src/app/utils/url'
 
 @Component({
     selector: 'app-controls',
@@ -38,11 +39,12 @@ export class ControlsPage implements OnInit, AfterViewInit {
         private modalController: ModalController,
         private smartthingsService: SmartThingsService,
         private globalStateService: GlobalStateService
-    ) {}
+    ) {
+		this.deviceId = extractDeviceIdFromUrl(this.router.url)
+	}
 
     ngOnInit(): void {
-        this.deviceId = getSessionStorageItem('currentDeviceId')
-        this.globalStateService.getDeviceById(this.deviceId).status === DeviceStatus.on
+        this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
             ? (this.actionValue = DeviceAction.apagar)
             : (this.actionValue = DeviceAction.encender)
     }

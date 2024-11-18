@@ -10,6 +10,7 @@ import { GlobalStateService } from 'src/app/services/global-state/global-state.s
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service';
 import { deleteCookie, getCookie, getSessionStorageItem, removeSessionStorageItem, setCookie } from 'src/app/utils/storage';
 import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer';
+import { extractDeviceIdFromUrl } from 'src/app/utils/url';
 
 @Component({
   selector: 'app-routines',
@@ -34,11 +35,12 @@ export class RoutinesPage implements OnInit, AfterViewInit {
         private modalController: ModalController,
         private smartthingsService: SmartThingsService,
         private globalStateService: GlobalStateService
-    ) {}
+    ) {
+		this.deviceId = extractDeviceIdFromUrl(this.router.url)
+	}
 
     ngOnInit(): void {
-        this.deviceId = getSessionStorageItem('currentDeviceId')
-        this.globalStateService.getDeviceById(this.deviceId).status === DeviceStatus.on
+        this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
             ? (this.actionValue = DeviceAction.apagar)
             : (this.actionValue = DeviceAction.encender)
     }
@@ -48,7 +50,6 @@ export class RoutinesPage implements OnInit, AfterViewInit {
     }
 
     handleGoBackButton = () => {
-        removeSessionStorageItem('currentDeviceId')
         this.router.navigate([`devices/`])
     }
 
