@@ -8,6 +8,7 @@ import { ConfigSchedule } from 'src/app/models/schedule-simple';
 import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model';
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service';
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 import { deleteCookie, getCookie, getSessionStorageItem, removeSessionStorageItem, setCookie } from 'src/app/utils/storage';
 import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer';
 import { extractDeviceIdFromUrl } from 'src/app/utils/url';
@@ -27,6 +28,7 @@ export class RoutinesPage implements OnInit, AfterViewInit {
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
+	deviceName: string = ''
     configSchedule: ConfigSchedule
     taskId: string
 
@@ -34,12 +36,14 @@ export class RoutinesPage implements OnInit, AfterViewInit {
         private router: Router,
         private modalController: ModalController,
         private smartthingsService: SmartThingsService,
-        private globalStateService: GlobalStateService
+        private globalStateService: GlobalStateService,
+		private storageService: StorageService
     ) {
 		this.deviceId = extractDeviceIdFromUrl(this.router.url)
 	}
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+		this.deviceName = await this.storageService.getItem('currentDeviceName')
         this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
             ? (this.actionValue = DeviceAction.apagar)
             : (this.actionValue = DeviceAction.encender)

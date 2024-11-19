@@ -16,6 +16,7 @@ import {
 } from 'src/app/utils/storage'
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
 import { extractDeviceIdFromUrl } from 'src/app/utils/url'
+import { StorageService } from 'src/app/services/storage/storage.service'
 
 @Component({
     selector: 'app-controls',
@@ -32,6 +33,7 @@ export class ControlsPage implements OnInit, AfterViewInit {
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
+	deviceName: string = ''
     configSchedule: ConfigSchedule
     taskId: string
 
@@ -39,12 +41,14 @@ export class ControlsPage implements OnInit, AfterViewInit {
         private router: Router,
         private modalController: ModalController,
         private smartthingsService: SmartThingsService,
-        private globalStateService: GlobalStateService
+        private globalStateService: GlobalStateService,
+		private storageService: StorageService
     ) {
         this.deviceId = extractDeviceIdFromUrl(this.router.url)
     }
-
-    ngOnInit(): void {
+	
+    async ngOnInit(): Promise<void> {
+		this.deviceName = await this.storageService.getItem('currentDeviceName')
         this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
             ? (this.actionValue = DeviceAction.apagar)
             : (this.actionValue = DeviceAction.encender)

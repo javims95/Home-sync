@@ -19,6 +19,7 @@ export class IconSelectorPage implements OnInit {
     deviceId: string | null = null
     iconList: string[] = []
     selectedIcon: string | null = null
+	deviceName: string = ''
 
     constructor(
         private router: Router,
@@ -28,7 +29,8 @@ export class IconSelectorPage implements OnInit {
 		this.deviceId = extractDeviceIdFromUrl(this.router.url)
 	}
 
-    ngOnInit() {
+    async ngOnInit() {
+		this.deviceName = await this.storageService.getItem('currentDeviceName')
         this.loadIcons()
         this.loadSelectedIcon()
     }

@@ -39,15 +39,18 @@ export class DevicesPage implements OnInit {
     }
 
     ngOnInit() {
-        this.goveeService.getAllDevices().then((response) => {
-            const data = response.data[0]
-            // console.log(data)
-            const { sku, device, deviceName } = data
+		// EL SERVICIO PARECE FUNCIONAR, PERO NO DEVUELVE NINGÚN VALOR DEL SENSOR
+		// DE TEMPERATURA, ESPERANDO RESPUESTA AL CORREO DE SOPROTE
+        // this.goveeService.getAllDevices().then((response) => {
+        //     const data = response.data[0]
+        //     console.log(data)
+        //     const { sku, device, deviceName } = data
 
-            this.goveeService.getDeviceStatus(sku, device).subscribe((status) => {
-                // console.log(status)
-            })
-        })
+        //     this.goveeService.getDeviceStatus(sku, device).subscribe((status) => {
+        //         console.log(status)
+        //     })
+        // })
+		console.log();
     }
 
     handleRefresh(event: any) {
@@ -68,8 +71,7 @@ export class DevicesPage implements OnInit {
         if (event.target && (event.target as HTMLElement).closest('app-power-switch')) {
             return
         }
-
-        setSessionStorageItem('currentDeviceId', device.deviceId)
+		this.storageService.saveItem('currentDeviceName', device.label)
         this.router.navigate([`devices/details/${device.deviceId}/controls`])
     }
 

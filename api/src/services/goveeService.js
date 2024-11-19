@@ -18,7 +18,7 @@ const getAllDevices = async (apiKey) => {
     }
 }
 
-const getDeviceState = async (requestId, sku, deviceMAC, apiKey) => {
+const getDeviceState = async (requestId, sku, deviceMAC) => {
     try {
         const response = await axios.post(
             `${GOVEE_API_BASE_URL}/router/api/v1/device/state`,
@@ -31,7 +31,7 @@ const getDeviceState = async (requestId, sku, deviceMAC, apiKey) => {
             },
             {
                 headers: {
-                    'Govee-API-Key': apiKey,
+                    'Govee-API-Key': process.env.GOVEE_API_KEY,
                     'Content-Type': 'application/json',
                 },
             }

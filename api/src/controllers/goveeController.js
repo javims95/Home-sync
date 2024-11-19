@@ -17,11 +17,9 @@ const getDevices = async (req, res) => {
 const getStatus = async (req, res) => {
     const { payload } = req.body
     const { sku, device } = payload
-    const apiKey = process.env.GOVEE_API_KEY
-    console.log(sku, device, apiKey)
 
     try {
-        const deviceState = await getDeviceState(uuidv4(), sku, device, apiKey)
+        const deviceState = await getDeviceState(uuidv4(), sku, device)
         res.json(deviceState)
     } catch (error) {
         res.status(500).json({ message: error.message })
