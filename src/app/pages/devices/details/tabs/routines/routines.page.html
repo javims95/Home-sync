@@ -42,10 +42,10 @@
                     </div>
                     <ion-toolbar>
                         <ion-buttons slot="start">
-                            <ion-button (click)="cancel()">Cancelar</ion-button>
+                            <ion-button class="cancel-button" (click)="cancel()" [strong]="true">Cancelar</ion-button>
                         </ion-buttons>
                         <ion-buttons slot="end">
-                            <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+                            <ion-button class="confirm-button" (click)="confirm()" [strong]="true">Confirmar</ion-button>
                         </ion-buttons>
                     </ion-toolbar>
                 </ng-template>

@@ -36,15 +36,24 @@
 .modal-content {
     display: flex;
     flex-direction: column;
-    height: calc(
-        100vh - 112px
-    );
+    height: calc(100vh - 112px);
     overflow-y: auto;
     background-color: #f6f6f6;
+
+	.custom-time-info {
+		background-color: #fff;
+		margin-block-start: 0;
+		margin-bottom: 0;
+		padding: 1em;
+	}
+
+    ion-datetime.custom-size.datetime-size-fixed:not(.datetime-prefer-wheel) {
+        max-width: inherit;
+    }
 }
 
 ion-toolbar {
-    --background: #f6f6f6
+    --background: #f6f6f6;
 }
 
 .my {

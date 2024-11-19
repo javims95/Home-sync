@@ -79,19 +79,22 @@
                                 </ion-item>
                             </ion-radio-group>
                             <div id="dateTime" [hidden]="!showDatetime">
+								<p class="custom-time-info">{{actionValue === 'turnOn' ? 'Encender' : 'Apagar'}} despues de {{timeObjInfo.hours}} horas y {{timeObjInfo.minutes}} minutos:</p>
                                 <ion-datetime
+                                    value="2024-01-01T00:00:00"
                                     (ionChange)="handleDatetimeChange($event)"
                                     presentation="time"
+									class="custom-size"
                                 ></ion-datetime>
                             </div>
                         </div>
                     </div>
                     <ion-toolbar>
                         <ion-buttons slot="start">
-                            <ion-button (click)="cancel()">Cancelar</ion-button>
+                            <ion-button class="cancel-button" (click)="cancel()" [strong]="true">Cancelar</ion-button>
                         </ion-buttons>
                         <ion-buttons slot="end">
-                            <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+                            <ion-button class="confirm-button" (click)="confirm()" [strong]="true">Confirmar</ion-button>
                         </ion-buttons>
                     </ion-toolbar>
                 </ng-template>

@@ -10,7 +10,7 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+@import '@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
 // @import "@ionic/angular/css/normalize.css";
@@ -45,4 +45,19 @@ body {
 
 ion-router-outlet {
     background-color: #f6f6f6;
+}
+
+/* Botones modales */
+ion-modal .confirm-button {
+    background-color: #3880ff;
+    color: white;
+    padding: 10px;
+	border-radius: 5px 5px 0 0;
+}
+
+ion-modal .cancel-button {
+    background-color: #e74040;
+    color: white;
+    padding: 10px;
+	border-radius: 5px 5px 0 0;
 }

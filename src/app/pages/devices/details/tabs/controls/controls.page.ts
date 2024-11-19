@@ -28,6 +28,7 @@ export class ControlsPage implements OnInit, AfterViewInit {
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
     actionValue: DeviceAction
     timeValue: string = '10'
+	timeObjInfo = {hours: '00', minutes: '00'};
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
@@ -40,8 +41,8 @@ export class ControlsPage implements OnInit, AfterViewInit {
         private smartthingsService: SmartThingsService,
         private globalStateService: GlobalStateService
     ) {
-		this.deviceId = extractDeviceIdFromUrl(this.router.url)
-	}
+        this.deviceId = extractDeviceIdFromUrl(this.router.url)
+    }
 
     ngOnInit(): void {
         this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
@@ -146,6 +147,13 @@ export class ControlsPage implements OnInit, AfterViewInit {
     }
 
     handleDatetimeChange = (event: CustomEvent) => {
+        const date = new Date(event.detail.value)
+
+        // Extrae las horas y los minutos
+        const hours = String(date.getHours()).padStart(2, '0')
+        const minutes = String(date.getMinutes()).padStart(2, '0')
+
+        this.timeObjInfo = { hours, minutes }
         this.timeValue = calculateTimeDifferenceInMinutes(event.detail.value)
     }
 }
