@@ -92,12 +92,21 @@ export class GlobalStateService {
         return this.devicesSubject.getValue().find((device) => device.deviceId === deviceId)
     }
 
-    getDeviceStatus(deviceId: string): string | void {
+    getDeviceStatus(
+        deviceId: string
+    ):
+        | string
+        | {
+              humidity:
+                  | { value: number; unit: string }
+                  | { temperature: { value: number; unit: string } }
+          } {
         const devices = this.devicesSubject.getValue()
         const deviceIndex = devices.findIndex((device) => device.deviceId === deviceId)
         if (deviceIndex !== -1) {
             return devices[deviceIndex].status
         }
+        return undefined
     }
 
     filterDevicesWithoutOutlet(): void {

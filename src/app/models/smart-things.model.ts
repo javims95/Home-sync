@@ -17,9 +17,21 @@ export interface Device {
     restrictionTier: number
     allowed: any[]
     executionContext: string
-    status?: string
+    status?: string | {humidity: {value: number; unit: string} | {temperature: {value: number; unit: string}}}
     currentTVContent?: string
     deviceTypeName?: string
+}
+
+export interface Status {
+    humidity?: {
+        value: number
+        unit: string
+    }
+    temperature?: {
+        value: number
+        unit: string
+    },
+	switch: 'on' | 'off';
 }
 
 interface Component {

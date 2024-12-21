@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { Device } from 'src/app/models/smart-things.model'
-import { GoveeService } from 'src/app/services/govee/govee.service'
 import { Router } from '@angular/router'
 import { CardComponent } from '../../components/card/card.component'
 import { NgFor } from '@angular/common'
 import { IonicModule } from '@ionic/angular'
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
-import { setSessionStorageItem } from 'src/app/utils/storage'
 import { FormsModule } from '@angular/forms'
 import { StorageService } from 'src/app/services/storage/storage.service'
 
@@ -17,11 +15,10 @@ import { StorageService } from 'src/app/services/storage/storage.service'
     standalone: true,
     imports: [IonicModule, NgFor, CardComponent, FormsModule],
 })
-export class DevicesPage implements OnInit {
+export class DevicesPage {
     devices: Device[]
 
     constructor(
-        private goveeService: GoveeService,
         private router: Router,
         private globalState: GlobalStateService,
         private storageService: StorageService
@@ -34,23 +31,10 @@ export class DevicesPage implements OnInit {
         //     20
         // )
         this.globalState.getAllDevices().subscribe((devices: Device[]) => {
+			console.log(devices);
+			
             this.devices = devices
         })
-    }
-
-    ngOnInit() {
-		// EL SERVICIO PARECE FUNCIONAR, PERO NO DEVUELVE NINGÚN VALOR DEL SENSOR
-		// DE TEMPERATURA, ESPERANDO RESPUESTA AL CORREO DE SOPROTE
-        // this.goveeService.getAllDevices().then((response) => {
-        //     const data = response.data[0]
-        //     console.log(data)
-        //     const { sku, device, deviceName } = data
-
-        //     this.goveeService.getDeviceStatus(sku, device).subscribe((status) => {
-        //         console.log(status)
-        //     })
-        // })
-		console.log();
     }
 
     handleRefresh(event: any) {

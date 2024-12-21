@@ -4,6 +4,7 @@ import { DeviceIcon } from 'src/app/models/device-icon'
 import { StorageService } from 'src/app/services/storage/storage.service'
 import { PowerSwitchComponent } from '../power-switch/power-switch.component'
 import { NgIf } from '@angular/common'
+import { Device } from 'src/app/models/smart-things.model'
 
 @Component({
     selector: 'app-card',
@@ -13,13 +14,15 @@ import { NgIf } from '@angular/common'
     imports: [IonicModule, PowerSwitchComponent, NgIf],
 })
 export class CardComponent implements OnInit {
-    @Input() device: any
+    @Input() device: Device
     @Input() index: number
     icon: string;
+	hasPowerSwitch: boolean;
 
     constructor(private storageService: StorageService) {}
 
     async ngOnInit() {
+		this.hasPowerSwitch = this.device.components[0].capabilities.some(capability => capability.id === 'switch')
         await this.loadDeviceIcon()
     }
 
