@@ -1,33 +1,21 @@
 <div class="controls-container">
     <div class="header">
         <div class="toolbar row align-items-center">
-            <app-icon
-                name="arrow-left-solid.svg"
-                color="#fff"
-                (iconClick)="handleGoBackButton()"
-                class="col-2"
-            ></app-icon>
+            <app-icon name="arrow-left-solid.svg" color="#fff" (iconClick)="handleGoBackButton()" class="col-2"></app-icon>
             <div class="title col-6">{{deviceName}}</div>
         </div>
     </div>
 
     <div class="content bg-light-grey">
         <div class="round-container" (click)="toggleChanged()">
-            <ion-toggle id="open-modal" #toggleRef (ionChange)="toggleChanged()"
-                >Temporizador</ion-toggle
-            >
+            <ion-toggle id="open-modal" #toggleRef (ionChange)="toggleChanged()">Temporizador</ion-toggle>
             <p class="text-muted">Ejemplo: Activar o desactivar después de 1 hora</p>
             <!-- Modal -->
             <ion-modal>
                 <ng-template>
                     <ion-toolbar>
                         <div class="row header-info align-items-start">
-                            <app-icon
-                                name="angle-left-solid.svg"
-                                color="#000"
-                                (iconClick)="cancel()"
-                                class="col-2"
-                            ></app-icon>
+                            <app-icon name="angle-left-solid.svg" color="#000" (iconClick)="cancel()" class="col-2"></app-icon>
                             <ion-title class="col-6">Temporizador</ion-title>
                         </div>
                     </ion-toolbar>
@@ -36,56 +24,34 @@
                         <div class="my">
                             <ion-radio-group [(ngModel)]="actionValue">
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="turnOn" justify="start"
-                                        >Encender</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="turnOn" justify="start">Encender</ion-radio>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="turnOff" justify="start"
-                                        >Apagar</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="turnOff" justify="start">Apagar</ion-radio>
                                 </ion-item>
                             </ion-radio-group>
                         </div>
                         <div class="my">
-                            <ion-radio-group
-                                [(ngModel)]="timeValue"
-                                (ionChange)="handleRadioChange($event)"
-                            >
+                            <ion-radio-group [(ngModel)]="timeValue" (ionChange)="handleRadioChange($event)">
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="10" justify="start"
-                                        >Después de 10 minutos</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="10" justify="start">Después de 10 minutos</ion-radio>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="15" justify="start"
-                                        >Después de 15 minutos</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="15" justify="start">Después de 15 minutos</ion-radio>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="30" justify="start"
-                                        >Después de 30 minutos</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="30" justify="start">Después de 30 minutos</ion-radio>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="60" justify="start"
-                                        >Después de 60 minutos</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="60" justify="start">Después de 60 minutos</ion-radio>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-radio labelPlacement="end" value="custom" justify="start"
-                                        >Personalizado</ion-radio
-                                    >
+                                    <ion-radio labelPlacement="end" value="custom" justify="start">Personalizado</ion-radio>
                                 </ion-item>
                             </ion-radio-group>
                             <div id="dateTime" [hidden]="!showDatetime">
-								<p class="custom-time-info">{{actionValue === 'turnOn' ? 'Encender' : 'Apagar'}} despues de {{timeObjInfo.hours}} horas y {{timeObjInfo.minutes}} minutos:</p>
-                                <ion-datetime
-                                    value="2024-01-01T00:00:00"
-                                    (ionChange)="handleDatetimeChange($event)"
-                                    presentation="time"
-									class="custom-size"
-                                ></ion-datetime>
+                                <p class="custom-time-info">{{actionValue === 'turnOn' ? 'Encender' : 'Apagar'}} despues de {{timeObjInfo.hours}} horas y {{timeObjInfo.minutes}} minutos:</p>
+                                <ion-datetime value="2024-01-01T00:00:00" (ionChange)="handleDatetimeChange($event)" presentation="time" class="custom-size"></ion-datetime>
                             </div>
                         </div>
                     </div>

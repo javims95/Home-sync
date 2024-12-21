@@ -7,13 +7,7 @@
     <ion-content class="ion-padding">
         <!-- Checkbox dentro del menú -->
         <ion-item>
-            <ion-checkbox
-                id="hide-outlet-checkbox"
-                slot="start"
-                (ionChange)="onToggleHideOutletDevices($event)"
-                [checked]="hideOutletDevices"
-            >
-            </ion-checkbox>
+            <ion-checkbox id="hide-outlet-checkbox" slot="start" (ionChange)="onToggleHideOutletDevices($event)" [checked]="hideOutletDevices"> </ion-checkbox>
             <ion-label>Ocultar dispositivos que contengan outlet</ion-label>
         </ion-item>
     </ion-content>

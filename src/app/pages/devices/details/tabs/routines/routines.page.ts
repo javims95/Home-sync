@@ -1,34 +1,33 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IonToggle, IonicModule, ModalController } from '@ionic/angular';
-import { IconComponent } from 'src/app/components/icon/icon.component';
-import { TimePickerComponent } from 'src/app/components/time-picker/time-picker.component';
-import { ConfigSchedule } from 'src/app/models/schedule-simple';
-import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model';
-import { GlobalStateService } from 'src/app/services/global-state/global-state.service';
-import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service';
-import { StorageService } from 'src/app/services/storage/storage.service';
-import { deleteCookie, getCookie, getSessionStorageItem, removeSessionStorageItem, setCookie } from 'src/app/utils/storage';
-import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer';
-import { extractDeviceIdFromUrl } from 'src/app/utils/url';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { Router } from '@angular/router'
+import { IonToggle, IonicModule, ModalController } from '@ionic/angular'
+import { IconComponent } from 'src/app/components/icon/icon.component'
+import { TimePickerComponent } from 'src/app/components/time-picker/time-picker.component'
+import { ConfigSchedule } from 'src/app/models/schedule-simple'
+import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model'
+import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
+import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
+import { StorageService } from 'src/app/services/storage/storage.service'
+import { deleteCookie, getCookie, getSessionStorageItem, removeSessionStorageItem, setCookie } from 'src/app/utils/storage'
+import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer'
+import { extractDeviceIdFromUrl } from 'src/app/utils/url'
 
 @Component({
-  selector: 'app-routines',
-  templateUrl: './routines.page.html',
-  styleUrls: ['./routines.page.scss'],
-  standalone: true,
-  imports: [IconComponent, IonicModule, FormsModule, TimePickerComponent],
+    selector: 'app-routines',
+    templateUrl: './routines.page.html',
+    styleUrls: ['./routines.page.scss'],
+    standalone: true,
+    imports: [IconComponent, IonicModule, FormsModule, TimePickerComponent],
 })
 export class RoutinesPage implements OnInit, AfterViewInit {
-
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
     actionValue: DeviceAction
     timeValue: string = '10'
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
-	deviceName: string = ''
+    deviceName: string = ''
     configSchedule: ConfigSchedule
     taskId: string
 
@@ -37,16 +36,14 @@ export class RoutinesPage implements OnInit, AfterViewInit {
         private modalController: ModalController,
         private smartthingsService: SmartThingsService,
         private globalStateService: GlobalStateService,
-		private storageService: StorageService
+        private storageService: StorageService
     ) {
-		this.deviceId = extractDeviceIdFromUrl(this.router.url)
-	}
+        this.deviceId = extractDeviceIdFromUrl(this.router.url)
+    }
 
     async ngOnInit(): Promise<void> {
-		this.deviceName = await this.storageService.getItem('currentDeviceName')
-        this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
-            ? (this.actionValue = DeviceAction.apagar)
-            : (this.actionValue = DeviceAction.encender)
+        this.deviceName = await this.storageService.getItem('currentDeviceName')
+        this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on ? (this.actionValue = DeviceAction.apagar) : (this.actionValue = DeviceAction.encender)
     }
 
     ngAfterViewInit(): void {
@@ -147,5 +144,4 @@ export class RoutinesPage implements OnInit, AfterViewInit {
     handleDatetimeChange = (event: CustomEvent) => {
         this.timeValue = calculateTimeDifferenceInMinutes(event.detail.value)
     }
-
 }

@@ -19,18 +19,18 @@ export class IconSelectorPage implements OnInit {
     deviceId: string | null = null
     iconList: string[] = []
     selectedIcon: string | null = null
-	deviceName: string = ''
+    deviceName: string = ''
 
     constructor(
         private router: Router,
         private storageService: StorageService,
         private http: HttpClient
     ) {
-		this.deviceId = extractDeviceIdFromUrl(this.router.url)
-	}
+        this.deviceId = extractDeviceIdFromUrl(this.router.url)
+    }
 
     async ngOnInit() {
-		this.deviceName = await this.storageService.getItem('currentDeviceName')
+        this.deviceName = await this.storageService.getItem('currentDeviceName')
         this.loadIcons()
         this.loadSelectedIcon()
     }
@@ -53,12 +53,9 @@ export class IconSelectorPage implements OnInit {
     async selectIcon(icon: string) {
         this.selectedIcon = icon
         if (this.deviceId) {
-            const savedIcons: DeviceIcon[] =
-                (await this.storageService.getItem('deviceIcons')) || []
+            const savedIcons: DeviceIcon[] = (await this.storageService.getItem('deviceIcons')) || []
 
-            const existingIconIndex = savedIcons.findIndex(
-                (icon) => icon.deviceId === this.deviceId
-            )
+            const existingIconIndex = savedIcons.findIndex((icon) => icon.deviceId === this.deviceId)
 
             if (existingIconIndex !== -1) {
                 savedIcons[existingIconIndex].icon = this.selectedIcon

@@ -16,20 +16,20 @@ import { Device } from 'src/app/models/smart-things.model'
 export class CardComponent implements OnInit {
     @Input() device: Device
     @Input() index: number
-    icon: string;
-	hasPowerSwitch: boolean;
+    icon: string
+    hasPowerSwitch: boolean
 
     constructor(private storageService: StorageService) {}
 
     async ngOnInit() {
-		this.hasPowerSwitch = this.device.components[0].capabilities.some(capability => capability.id === 'switch')
+        this.hasPowerSwitch = this.device.components[0].capabilities.some((capability) => capability.id === 'switch')
         await this.loadDeviceIcon()
     }
 
     async loadDeviceIcon() {
         const savedIcons: DeviceIcon[] = (await this.storageService.getItem('deviceIcons')) || []
         const savedIcon = savedIcons.find((icon) => icon.deviceId === this.device.deviceId)
-		this.icon = savedIcon ? savedIcon.icon : 'default.svg'
+        this.icon = savedIcon ? savedIcon.icon : 'default.svg'
     }
 
     // Método para obtener la ruta del icono

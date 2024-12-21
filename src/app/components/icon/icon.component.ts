@@ -39,9 +39,7 @@ export class IconComponent implements OnInit {
                     svgElement.setAttribute('fill', this.color)
                 }
                 const serializer = new XMLSerializer()
-                this.svgContent = this.sanitizer.bypassSecurityTrustHtml(
-                    serializer.serializeToString(doc)
-                )
+                this.svgContent = this.sanitizer.bypassSecurityTrustHtml(serializer.serializeToString(doc))
             },
             error: (error) => console.error('Error loading SVG:', error),
         })

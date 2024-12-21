@@ -1,33 +1,21 @@
 <div class="routines-container">
     <div class="header">
         <div class="toolbar row align-items-center">
-            <app-icon
-                name="arrow-left-solid.svg"
-                color="#fff"
-                (iconClick)="handleGoBackButton()"
-                class="col-2"
-            ></app-icon>
+            <app-icon name="arrow-left-solid.svg" color="#fff" (iconClick)="handleGoBackButton()" class="col-2"></app-icon>
             <div class="title col-6">{{deviceName}}</div>
         </div>
     </div>
 
     <div class="content bg-light-grey">
         <div class="round-container" (click)="toggleChanged()">
-            <ion-toggle id="open-modal" #toggleRef (ionChange)="toggleChanged()"
-                >Encendido y apagado</ion-toggle
-            >
+            <ion-toggle id="open-modal" #toggleRef (ionChange)="toggleChanged()">Encendido y apagado</ion-toggle>
             <p class="text-muted">Ejemplo: Activar los L,X,V de 14:30 a 15:30</p>
             <!-- Modal -->
             <ion-modal>
                 <ng-template>
                     <ion-toolbar>
                         <div class="row header-info align-items-start">
-                            <app-icon
-                                name="angle-left-solid.svg"
-                                color="#000"
-                                (iconClick)="cancel()"
-                                class="col-2"
-                            ></app-icon>
+                            <app-icon name="angle-left-solid.svg" color="#000" (iconClick)="cancel()" class="col-2"></app-icon>
                             <ion-title class="col-6">Rutinas</ion-title>
                         </div>
                     </ion-toolbar>
@@ -36,9 +24,7 @@
                         <div class="my">
                             <app-time-picker></app-time-picker>
                         </div>
-                        <div class="my">
-                          
-                        </div>
+                        <div class="my"></div>
                     </div>
                     <ion-toolbar>
                         <ion-buttons slot="start">

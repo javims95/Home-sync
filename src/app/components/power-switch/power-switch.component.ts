@@ -4,7 +4,7 @@ import { SmartThingsService } from 'src/app/services/smart-things/smart-things.s
 
 const statusMap = {
     'Dispositivo encendido': 'on',
-    'Dispositivo apagado': 'off'
+    'Dispositivo apagado': 'off',
 }
 
 @Component({
@@ -35,9 +35,7 @@ export class PowerSwitchComponent {
     }
 
     reverseButtonState = () => {
-        const inputElement = window.document.querySelector(
-            `input[data-deviceId="${this.deviceId}"]`
-        ) as HTMLInputElement
+        const inputElement = window.document.querySelector(`input[data-deviceId="${this.deviceId}"]`) as HTMLInputElement
         inputElement && (inputElement.checked = !inputElement.checked)
     }
 }

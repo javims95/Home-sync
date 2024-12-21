@@ -31,8 +31,8 @@ export class DevicesPage {
         //     20
         // )
         this.globalState.getAllDevices().subscribe((devices: Device[]) => {
-			console.log(devices);
-			
+            console.log(devices)
+
             this.devices = devices
         })
     }
@@ -40,38 +40,38 @@ export class DevicesPage {
     handleRefresh(event: any) {
         this.globalState.refreshDevices().subscribe({
             next: (devices: Device[]) => {
-                this.devices = devices;
-                event.target.complete();
+                this.devices = devices
+                event.target.complete()
             },
             error: (error) => {
-                console.error('Error al obtener los dispositivos:', error);
-                event.target.complete();
-            }
-        });
-    }    
+                console.error('Error al obtener los dispositivos:', error)
+                event.target.complete()
+            },
+        })
+    }
 
     openDetailsPage = (event: Event, device: Device) => {
         // Detener la propagación del evento si se hizo clic en el power-switch
         if (event.target && (event.target as HTMLElement).closest('app-power-switch')) {
             return
         }
-		this.storageService.saveItem('currentDeviceName', device.label)
+        this.storageService.saveItem('currentDeviceName', device.label)
         this.router.navigate([`devices/details/${device.deviceId}/controls`])
     }
 
     hideOutletDevices = () => {
-        this.globalState.filterDevicesWithoutOutlet();
+        this.globalState.filterDevicesWithoutOutlet()
     }
 
     onToggleHideOutletDevices(event: any) {
-        const isChecked = event.detail.checked;
-        this.storageService.saveItem('hideOutletDevices', isChecked);
+        const isChecked = event.detail.checked
+        this.storageService.saveItem('hideOutletDevices', isChecked)
         if (isChecked) {
-            this.hideOutletDevices();
+            this.hideOutletDevices()
         } else {
             this.globalState.refreshDevices().subscribe((devices: Device[]) => {
-                this.devices = devices;
-            });
+                this.devices = devices
+            })
         }
     }
 }

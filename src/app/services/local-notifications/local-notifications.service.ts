@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core'
-import {
-    CancelOptions,
-    Channel,
-    LocalNotifications,
-    ScheduleOptions,
-} from '@capacitor/local-notifications'
+import { CancelOptions, Channel, LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications'
 
 @Injectable({
     providedIn: 'root',
@@ -12,12 +7,7 @@ import {
 export class NotificationsService {
     constructor() {}
 
-    sendNotification = async (
-        title: string,
-        body: string,
-        largeBody: string,
-        summaryText: string
-    ) => {
+    sendNotification = async (title: string, body: string, largeBody: string, summaryText: string) => {
         let options: ScheduleOptions = {
             notifications: [
                 {
@@ -40,13 +30,7 @@ export class NotificationsService {
         }
     }
 
-    scheduleNotification = async (
-        title: string,
-        body: string,
-        largeBody: string,
-        summaryText: string,
-        timerInSeconds: number
-    ) => {
+    scheduleNotification = async (title: string, body: string, largeBody: string, summaryText: string, timerInSeconds: number) => {
         let options: ScheduleOptions = {
             notifications: [
                 {

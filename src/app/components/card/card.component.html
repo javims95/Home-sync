@@ -7,12 +7,7 @@
             </div>
 
             <div *ngIf="hasPowerSwitch">
-                <app-power-switch
-                    (click)="$event.stopPropagation()"
-                    [index]="index"
-                    [checked]="device.status === 'on' ? true : false"
-                    [deviceId]="device.deviceId"
-                ></app-power-switch>
+                <app-power-switch (click)="$event.stopPropagation()" [index]="index" [checked]="device.status === 'on' ? true : false" [deviceId]="device.deviceId"></app-power-switch>
             </div>
         </div>
     </div>
@@ -21,7 +16,7 @@
         <span *ngIf="device.currentTVContent && device.status === 'on'" class="currentTVContent">
             {{ device.currentTVContent }}
         </span>
-		<!-- <div *ngIf="device.status.humidity || device.status.temperature" class="hygrometer-data">
+        <!-- <div *ngIf="device.status.humidity || device.status.temperature" class="hygrometer-data">
 
 		</div> -->
     </div>

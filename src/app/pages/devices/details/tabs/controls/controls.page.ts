@@ -7,13 +7,7 @@ import { ConfigSchedule } from 'src/app/models/schedule-simple'
 import { SmartThingsService } from 'src/app/services/smart-things/smart-things.service'
 import { calculateTimeDifferenceInMinutes, minutesToMilliseconds } from 'src/app/utils/timmer'
 import { DeviceAction, DeviceStatus } from 'src/app/models/smart-things.model'
-import {
-    deleteCookie,
-    getCookie,
-    getSessionStorageItem,
-    removeSessionStorageItem,
-    setCookie,
-} from 'src/app/utils/storage'
+import { deleteCookie, getCookie, getSessionStorageItem, removeSessionStorageItem, setCookie } from 'src/app/utils/storage'
 import { GlobalStateService } from 'src/app/services/global-state/global-state.service'
 import { extractDeviceIdFromUrl } from 'src/app/utils/url'
 import { StorageService } from 'src/app/services/storage/storage.service'
@@ -29,11 +23,11 @@ export class ControlsPage implements OnInit, AfterViewInit {
     @ViewChild('toggleRef', { static: false }) toggle?: IonToggle
     actionValue: DeviceAction
     timeValue: string = '10'
-	timeObjInfo = {hours: '00', minutes: '00'};
+    timeObjInfo = { hours: '00', minutes: '00' }
     showDatetime: boolean = false
     shouldOpenModal: boolean = true
     deviceId: string
-	deviceName: string = ''
+    deviceName: string = ''
     configSchedule: ConfigSchedule
     taskId: string
 
@@ -42,16 +36,14 @@ export class ControlsPage implements OnInit, AfterViewInit {
         private modalController: ModalController,
         private smartthingsService: SmartThingsService,
         private globalStateService: GlobalStateService,
-		private storageService: StorageService
+        private storageService: StorageService
     ) {
         this.deviceId = extractDeviceIdFromUrl(this.router.url)
     }
-	
+
     async ngOnInit(): Promise<void> {
-		this.deviceName = await this.storageService.getItem('currentDeviceName')
-        this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on
-            ? (this.actionValue = DeviceAction.apagar)
-            : (this.actionValue = DeviceAction.encender)
+        this.deviceName = await this.storageService.getItem('currentDeviceName')
+        this.globalStateService.getDeviceById(this.deviceId)?.status === DeviceStatus.on ? (this.actionValue = DeviceAction.apagar) : (this.actionValue = DeviceAction.encender)
     }
 
     ngAfterViewInit(): void {

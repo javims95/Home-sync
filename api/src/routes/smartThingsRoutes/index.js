@@ -1,15 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {
-    getDevices,
-    getDescription,
-    toggleDevice,
-    turnOn,
-    turnOff,
-    getStatus,
-    simpleSchedule,
-    cancelTask,
-} = require('../../controllers/smartthingsController')
+const { getDevices, getDescription, toggleDevice, turnOn, turnOff, getStatus, simpleSchedule, cancelTask } = require('../../controllers/smartthingsController')
 
 router.get('/devices', getDevices)
 router.get('/devices/:deviceId', getDescription)

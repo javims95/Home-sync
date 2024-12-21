@@ -40,9 +40,7 @@ export class GlobalStateService {
 
     private async initStatusDevices(): Promise<void> {
         const devices = this.devicesSubject.value
-        const statusPromises = devices.map((device) =>
-            this.smartthingsService.getStatus(device.deviceId)
-        )
+        const statusPromises = devices.map((device) => this.smartthingsService.getStatus(device.deviceId))
 
         Promise.all(statusPromises).then((statuses) => {
             const updatedDevices = devices.map((device, index) => ({
@@ -58,17 +56,10 @@ export class GlobalStateService {
         const devices = this.devicesSubject.getValue()
         for (let i = 0; i < devices.length; i++) {
             const device = devices[i]
-            if (
-                device.deviceTypeName?.includes(DEVICES.SAMSUNG) ||
-                device.deviceTypeName?.includes(DEVICES.TV)
-            ) {
+            if (device.deviceTypeName?.includes(DEVICES.SAMSUNG) || device.deviceTypeName?.includes(DEVICES.TV)) {
                 try {
-                    const description = await this.smartthingsService.getDescription(
-                        device.deviceId
-                    )
-                    devices[i].currentTVContent = this.getCurrentTVContent(
-                        description.components.main.tvChannel.tvChannelName.value
-                    )
+                    const description = await this.smartthingsService.getDescription(device.deviceId)
+                    devices[i].currentTVContent = this.getCurrentTVContent(description.components.main.tvChannel.tvChannelName.value)
                 } catch (error) {
                     console.error('Error obteniendo la descripción del dispositivo:', error)
                 }
@@ -92,14 +83,10 @@ export class GlobalStateService {
         return this.devicesSubject.getValue().find((device) => device.deviceId === deviceId)
     }
 
-    getDeviceStatus(
-        deviceId: string
-    ):
+    getDeviceStatus(deviceId: string):
         | string
         | {
-              humidity:
-                  | { value: number; unit: string }
-                  | { temperature: { value: number; unit: string } }
+              humidity: { value: number; unit: string } | { temperature: { value: number; unit: string } }
           } {
         const devices = this.devicesSubject.getValue()
         const deviceIndex = devices.findIndex((device) => device.deviceId === deviceId)
@@ -111,9 +98,7 @@ export class GlobalStateService {
 
     filterDevicesWithoutOutlet(): void {
         const devices = this.devicesSubject.getValue()
-        const filteredDevices = devices.filter(
-            (device) => !device.label.toLowerCase().includes('outlet')
-        )
+        const filteredDevices = devices.filter((device) => !device.label.toLowerCase().includes('outlet'))
         this.devicesSubject.next(filteredDevices)
     }
 

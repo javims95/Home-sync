@@ -1,11 +1,5 @@
 <div class="power-switch">
-    <input
-        id="checkbox-{{ index }}"
-        type="checkbox"
-        [checked]="checked"
-        [attr.data-deviceId]="deviceId"
-        (click)="toggleDevice()"
-    />
+    <input id="checkbox-{{ index }}" type="checkbox" [checked]="checked" [attr.data-deviceId]="deviceId" (click)="toggleDevice()" />
     <label class="button" for="checkbox-{{ index }}">
         <span class="icon">
             <svg
